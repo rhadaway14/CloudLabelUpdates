@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  margin: 0;
+  /* background: #161623; */
+  /* background: rgb(2,0,36); */
+  /* background: linear-gradient(156deg, rgba(2,0,36,1) 33%, rgba(9,9,121,1) 65%, rgba(0,212,255,1) 100%) fixed; */
+  /* background-repeat: no-repeat;
+  background-size: auto;
+  height: auto; */
+}
+
+/* p {
+  color: white;
+} */
