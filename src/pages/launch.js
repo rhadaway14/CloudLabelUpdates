@@ -1,8 +1,13 @@
 import React, {useState} from "react";
 import Background from "../components/backgrounds";
 import geo from '../images/misc/launch_background.jpg';
+import Buttons from "../components/buttons";
+// import Submit from "../components/forms";
+import Cards from "../containers/cards";
+
 
 export default function Launch() {
+    const [form, setForm] = useState('')
 
     return(
         <>
@@ -13,12 +18,25 @@ export default function Launch() {
                     
             </Background.Overlay>
                 <div style={{position: 'absolute'}}>
-                    <Background.Text style={{ marginTop: '10px', marginLeft: '10vw'}}>Change these to buttons</Background.Text>
-                    <Background.Text style={{ marginTop: '10px', marginLeft: '15vw'}}>Update</Background.Text>
-                    <Background.Text style={{ marginTop: '10px', marginLeft: '3vw'}}>Commit</Background.Text>
+                    <Buttons>
+                        <Buttons.Pill onClick={() => setForm('Create')} style={{ marginLeft: '10vw'}}>Create</Buttons.Pill>
+                        <Buttons.Pill onClick={() => setForm('Read')} style={{ marginLeft: '3vw'}}>Read</Buttons.Pill>
+                        <Buttons.Pill onClick={() => setForm('Update')} style={{ marginLeft: '15vw'}}>Update</Buttons.Pill>
+                        <Buttons.Pill onClick={() => setForm('Delete')} style={{ marginLeft: '0vw'}}>Delete</Buttons.Pill>
+                    </Buttons> 
                 </div>
+                <Background.Title>CloudLabel</Background.Title>
+                { form === 'Create'?
+                <Cards.Create onClick={() => setForm('')}></Cards.Create> : ''}
+                { form === 'Read'?
+                <Cards.Read onClick={() => setForm('')}></Cards.Read> : ''}
+                { form === 'Update'?
+                <Cards.Update onClick={() => setForm('')}></Cards.Update> : ''}
+                { form === 'Delete'?
+                <Cards.Delete onClick={() => setForm('')}></Cards.Delete> : ''}
             </div>
-            <Background.Title>CloudLabel</Background.Title>
+            
+            
         </>
     )
 };

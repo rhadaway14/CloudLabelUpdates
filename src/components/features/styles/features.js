@@ -2,19 +2,17 @@
 import styled from 'styled-components';
 
 
-let opa = '50%'
-
 export const Container = styled.div`
 display: flex;
 flex-wrap: wrap;
-padding: 40px;
+padding: 5px;
 justify-content: center;
-margin-top: 500px;
+// margin-top: 25vh;
 `;
 
 export const Card = styled.div`
-width: 800px;
-height:300px;
+width: 27.5vw;
+height: 27.5vh;
 // padding: 5px 15px;
 // background: rgba(0,0,0,0.1);
 border-radius: 15px;
@@ -23,8 +21,10 @@ box-shadow: 10px 10px 20px rgb(185, 235, 255);
 border-top: 1px solid rgba(185, 235, 255,0.5);
 border-left: 1px solid rgba(185, 235, 255,0.5);
 backdrop-filter: blur(5px);
+min-width: 400px;
+min-height: 250px;
 
-transition: 1s;
+transition: 2s;
 
 &:hover {
     // box-shadow: 0 0 5px  white,
@@ -47,13 +47,13 @@ export const Image = styled.img`
 width: 100%;
 height: 100%;
 object-fit: cover;
-object-position: 0px 45%;
+object-position: 0px 40%;
 border-radius: 15px;
-filter: opacity(${opa});
+filter: grayscale(100%);
 transition: 1.5s;
 
 ${Card}:hover & {
-    filter: opacity(100%);
+    filter: grayscale(0%);
 }
 
 }
@@ -66,28 +66,42 @@ left: 0;
 margin: 25px;
 margin-left: 40px;
 // font-family: 'Michroma', sans-serif;
+display: flex;
 `;
 
 export const Statement = styled.div`
-font-size: 35px;
+font-family: Inknut Antiqua, sans-serif;
+font-size: 40px;
 color: white;
-text-shadow: 2px 2px 2px black,
-                2px -2px 2px black,
-                -2px 2px 2px black,
-                -2px -2px 2px black;
-font-family: 'Michroma', sans-serif;
+// text-shadow: 0px 0px 1px white;
+//                 2px -2px 2px black,
+//                 -2px 2px 2px black,
+//                 -2px -2px 2px black;
+// font-family: 'Michroma', sans-serif;
 font-weight: 700;
 `;
 
 export const Sub = styled.div`
 font-size: 25px;
-color: white;
-text-shadow: 2px 2px 2px black,
-                2px -2px 2px black,
-                -2px 2px 2px black,
-                -2px -2px 2px black;
+color: black;
+// position: absolute;
+// top: 0;
+// left: 200%;
 font-family: 'Michroma', sans-serif;
+filter: opacity(0%);
+margin-top: 0px;
+margin-left: 8vw;
+transform: translateY(-100px);
+
+${Card}:hover & {
+    
+    transition: 1s;
+    filter: opacity(100%);
+    color: white;
+}
 `;
+
+
 
 export const FButton = styled.div`
 font-family: 'Michroma', sans-serif;

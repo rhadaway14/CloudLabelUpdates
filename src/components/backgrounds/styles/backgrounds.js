@@ -28,24 +28,33 @@ export const Background = styled.img`
 
 export const Overlay = styled.div`
     background: black;
-    height: 100vh;
-    width: 100vw;
-    transform: skewY(-30deg) translateY(-50vw);
+    height: 750px;
+    width: 1200px;
+    transform: skewY(-25deg) translateY(-500px);
     overflow:hidden;
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
 `;
 
 export const Words = styled.p`
-    font-size: 35px;
-    color: white;
+    font-size: 30px;
+    color: Black;
     font-family: Inknut Antiqua, sans-serif;
     font-weight: 700;
-    
+    padding-left: 20px;
+    padding-right: 20px;
+    // width: 15vw;
+`;
 
-    &:hover {
-        transition: 1s;
-        letter-spacing: 2px;
-    }
+export const Search = styled.p`
+    font-size: 20px;
+    color: white;
+    margin-bottom: 0px;
+    font-family: Inknut Antiqua, sans-serif;
+    font-weight: 700;
+    padding-left: 20px;
+    padding-right: 20px;
 `;
 
 export const Title = styled.h1`
@@ -53,7 +62,19 @@ font-size: 50px;
 color: black;
 font-family: Cardo, sans-serif;
 font-weight: 700;
-position: absolute;
-bottom: 25vw;
-left: 40vw;
+// position: fixed;
+// bottom: 0px;
+// right: 50px;
+`;
+
+export const TitleTop = styled.h1`
+font-size: 50px;
+color: black;
+font-family: Cardo, sans-serif;
+font-weight: 700;
+padding: 15px;
+// position: fixed;
+// Top: 0px;
+// left: 30px;
+border: 5px solid black;
 `;
