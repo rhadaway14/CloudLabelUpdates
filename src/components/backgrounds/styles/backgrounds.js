@@ -53,7 +53,7 @@ export const Search = styled.p`
     margin-bottom: 0px;
     font-family: Inknut Antiqua, sans-serif;
     font-weight: 700;
-    padding-left: 20px;
+    // padding-left: 20px;
     padding-right: 20px;
 `;
 
@@ -77,4 +77,5 @@ padding: 15px;
 // Top: 0px;
 // left: 30px;
 border: 5px solid black;
+text-align: center;
 `;

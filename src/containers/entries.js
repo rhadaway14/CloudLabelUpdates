@@ -1,13 +1,11 @@
-import Cards from "../containers/cards";
-import Links from "../containers/links";
 import Inputs from "../components/inputs";
 import Forms from "../containers/forms";
-import Features from "../components/features";
 
-export default function Test() {
+export default function Entries({children, ...restProps}) {
+    return <></>
+}
 
-    // return(<Cards.Test></Cards.Test>)}
-    // return( <Links.Button>UPDSA</Links.Button>)}
+Entries.Write = function EntriesWrite({children, ...restProps}) {
     return(
 
         <div style={{display: 'flex',
@@ -24,7 +22,7 @@ export default function Test() {
             }}>
 
         <Inputs>
-            <Inputs.Title>Item Number: 1111</Inputs.Title>
+            <Inputs.Title>Item Number: {children}</Inputs.Title>
             <Inputs.Row>
                 <Forms.Text onChange={(e) => {console.log(e.target.value)}}>Display Name</Forms.Text>
                 <Forms.Text>Color Bar</Forms.Text>

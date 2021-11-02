@@ -63,10 +63,13 @@ export const Section = styled.div`
 position: absolute;
 top: 0;
 left: 0;
-margin: 25px;
-margin-left: 40px;
+height: 100%;
+width: 100%;
+// margin: 25px;
+// margin-left: 40px;
 // font-family: 'Michroma', sans-serif;
 display: flex;
+justify-content: start;
 `;
 
 export const Statement = styled.div`

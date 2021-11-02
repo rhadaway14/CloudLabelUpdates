@@ -4,20 +4,21 @@ import styled from 'styled-components';
 export const ListContainer = styled.div`
 // margin: 0;
 // padding: 0;
-// font-family: Inknut Antiqua, sans-serif;
+font-family: Inknut Antiqua, sans-serif;
 // cursor: pointer;
 // background: #00080c;
 `;
 
 
 export const UL = styled.ul`
-margin: 0;
+margin: 0 auto;
 padding: 10px 20px;
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-background: #00151f;
+font-family: Inknut Antiqua, sans-serif;
+// position: absolute;
+// top: 0;
+// left: 50%;
+// transform: translate(-50%, -50%);
+// background: #00151f;
 width: 200px;
 border: 1px solid rgba(0,0,0,0.5)
 `;
@@ -37,8 +38,8 @@ export const LI = styled.li`
 export const Label =  styled.label`
     cursor: pointer;
     padding-left: 30px;
-    font-size: 18px;
-    color: #fff;
+    font-size: 15px;
+    color: #000;
 `;
 
 
@@ -46,7 +47,7 @@ export const Label =  styled.label`
 export const Check = styled.span`
     
     position: absolute;
-    top: 10px;
+    top: 22.5px;
     left: 0;
     width: 20px;
     height: 20px;
@@ -75,8 +76,8 @@ export const Input = styled.input`
     opacity: 0;
 
     &:checked + ${Check}: before {
-        background: #adff00;
-        box-shadow: 0 0 15px #adff00;
+        background: #0f6da1;
+        box-shadow: 0 0 15px #0f6da1;
         transform: translateX(0px)
     }
 `;

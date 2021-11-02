@@ -140,25 +140,31 @@ Cards.Test = function CardsTest({ onClick, children, ...restProps}) {
     <div>
                         <Checklist.UL>
                             <Checklist.LI>
-                                <Checklist.Label>Item 1
+                                <Checklist.Label>Salt Lake
                                     <Checklist.Input type='checkbox' name=''/>
                                     <Checklist.Check></Checklist.Check>
                                 </Checklist.Label>
                             </Checklist.LI>
                             <Checklist.LI>
-                                <Checklist.Label>Item 2
+                                <Checklist.Label>Buckeye
                                     <Checklist.Input type='checkbox' name=''/>
                                     <Checklist.Check></Checklist.Check>
                                 </Checklist.Label>
                             </Checklist.LI>
                             <Checklist.LI>
-                                <Checklist.Label>Item 3 
+                                <Checklist.Label>DeLand
                                     <Checklist.Input type='checkbox' name=''/>
                                     <Checklist.Check></Checklist.Check>
                                 </Checklist.Label>
                             </Checklist.LI>
                             <Checklist.LI>
-                                <Checklist.Label>Item 4
+                                <Checklist.Label>Glendive
+                                    <Checklist.Input type='checkbox' name=''/>
+                                    <Checklist.Check></Checklist.Check>
+                                </Checklist.Label>
+                            </Checklist.LI>
+                            <Checklist.LI>
+                                <Checklist.Label>Williamson
                                     <Checklist.Input type='checkbox' name=''/>
                                     <Checklist.Check></Checklist.Check>
                                 </Checklist.Label>
