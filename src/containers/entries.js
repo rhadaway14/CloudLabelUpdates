@@ -5,7 +5,7 @@ export default function Entries({children, ...restProps}) {
     return <></>
 }
 
-Entries.Write = function EntriesWrite({children, ...restProps}) {
+Entries.Write = function EntriesWrite({form, children, ...restProps}) {
     return(
 
         <div style={{display: 'flex',
@@ -40,7 +40,8 @@ Entries.Write = function EntriesWrite({children, ...restProps}) {
             </Inputs.Row>
             <Inputs.Row>
                 <Inputs.Col>
-                    <Inputs.Submit/>
+                    {form !== 'Read' &&
+                    <Inputs.Submit value={form}/>}
                 </Inputs.Col>
             </Inputs.Row>
         </Inputs>

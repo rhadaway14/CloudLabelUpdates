@@ -129,4 +129,8 @@ export const Submit = styled.input`
     color: #000;
     font-size: 18px;
     border-radius: 2px;
+
+    &:submit + ${Container} {
+        background: white;
+    }
 `;

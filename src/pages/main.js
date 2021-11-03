@@ -12,6 +12,7 @@ import Submit from "../components/forms";
 import Crud from "../containers/crud";
 import Links from "../containers/links";
 import Entries from "../containers/entries";
+import Locations from "../containers/locations";
 
 
 
@@ -108,35 +109,31 @@ export default function Main() {
                         <Crud.Card onClick={() => cardSelect('Create')} style={cardStyle} src={create}>
                             <Features.Section>
                                 <div style={{padding: '20px'}}>
-                                <Features.Statement>
-                                    Create
-                                </Features.Statement>
-                                {form === 'Create' &&
-                                    <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false)}} onKeyDown={(e) => keyDown(e)}/>}
-                                
+                                    <Features.Statement>
+                                        Create
+                                    </Features.Statement>
+                                    {form === 'Create' &&
+                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false)}} onKeyDown={(e) => keyDown(e)}/>}
                                 </div>
-
-                                
-                                { data['Item'] !== ''&&
+                                { form === 'Create' && data['Item'] !== ''&&
                                 <div style={{textAlign: 'center', padding: '25vh 5px'}}>
                                     <Background.Search style={{color: 'black'}}>This Item Already Exists.</Background.Search>
                                     <Background.Search style={{color: 'black'}}>Would You Like To Update This Item?</Background.Search>
                                     <Buttons.Rectangle onClick={(e) => {linkClick(e, 'Update')}}>Update</Buttons.Rectangle>
-                                </div>
-                                // <div style={{textAlign: 'center', padding: '10px 5px', width: '30vw'}}>
-                                //     <Background.Search style={{color: 'black'}}>Facilities:</Background.Search>
-                                //     <Cards.Test></Cards.Test>
-                                // </div>
-                                }
-
+                                </div>}
+                                {/* <div style={{textAlign: 'center', padding: '10px 5px', width: '30vw'}}>
+                                    <Background.Search style={{color: 'black'}}>Facilities:</Background.Search>
+                                    <Cards.Test></Cards.Test>
+                                </div> */}
+                                
                                 {entry && data["Item"] === '' &&
-                                    <Entries.Write>{itemNo}</Entries.Write>}
-
+                                <Entries.Write form={form}>{itemNo}</Entries.Write>}
+                                {/* // <Locations></Locations>} */}
                                 {form === 'Create' &&
                                 <div>
                                     <Buttons.Round onClick={(e) => buttonClick(e)}>x</Buttons.Round>
                                 </div>}
-                                
+
                             </Features.Section>
                             <Features.Sub>Create Label Content For New Items</Features.Sub>
                         </Crud.Card>}
@@ -144,17 +141,31 @@ export default function Main() {
                         { (form === 'Read' || form === '') &&
                         <Crud.Card onClick={() => cardSelect('Read')} style={cardStyle} src={read}>
                             <Features.Section>
-                                <div>
-                                <Features.Statement>
-                                    Read
-                                </Features.Statement>
-                                {form === 'Read' &&
-                                    <Crud.Search value={itemNo} onChange={(e) => setItemNo(e.target.value)} onKeyDown={(e) => keyDown(e)}/>}
+                                <div style={{padding: '20px'}}>
+                                    <Features.Statement>
+                                        Read
+                                    </Features.Statement>
+                                    {form === 'Read' &&
+                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false)}} onKeyDown={(e) => keyDown(e)}/>}
                                 </div>
+                                { form === 'Read' && data['Item'] === ''&&
+                                <div style={{textAlign: 'center', padding: '25vh 5px'}}>
+                                    <Background.Search style={{color: 'black'}}>This Item Does Not Exists.</Background.Search>
+                                    <Background.Search style={{color: 'black'}}>Would You Like To Create This Item?</Background.Search>
+                                    <Buttons.Rectangle onClick={(e) => {linkClick(e, 'Create')}}>Create</Buttons.Rectangle>
+                                </div>}
+                                {/* <div style={{textAlign: 'center', padding: '10px 5px', width: '30vw'}}>
+                                    <Background.Search style={{color: 'black'}}>Facilities:</Background.Search>
+                                    <Cards.Test></Cards.Test>
+                                </div> */}
+                                
+                                {entry && data["Item"] !== '' &&
+                                <Entries.Write form={form}>{itemNo}</Entries.Write>}
                                 {form === 'Read' &&
                                 <div>
                                     <Buttons.Round onClick={(e) => buttonClick(e)}>x</Buttons.Round>
                                 </div>}
+
                             </Features.Section>
                             <Features.Sub>Review Label Content On Existing Items</Features.Sub>
                         </Crud.Card>}
@@ -162,17 +173,31 @@ export default function Main() {
                         { (form === 'Update' || form === '') &&
                         <Crud.Card onClick={() => cardSelect('Update')} style={cardStyle} src={update}>
                             <Features.Section>
-                                <div>
-                                <Features.Statement>
-                                    Update
-                                </Features.Statement>
-                                {form === 'Update' &&
-                                    <Crud.Search value={itemNo} onChange={(e) => setItemNo(e.target.value)} onKeyDown={(e) => keyDown(e)}/>}
+                                <div style={{padding: '20px'}}>
+                                    <Features.Statement>
+                                        Update
+                                    </Features.Statement>
+                                    {form === 'Update' &&
+                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false)}} onKeyDown={(e) => keyDown(e)}/>}
                                 </div>
+                                { form === 'Update' && data['Item'] === ''&&
+                                <div style={{textAlign: 'center', padding: '25vh 5px'}}>
+                                    <Background.Search style={{color: 'black'}}>This Item Does Not Exists.</Background.Search>
+                                    <Background.Search style={{color: 'black'}}>Would You Like To Create This Item?</Background.Search>
+                                    <Buttons.Rectangle onClick={(e) => {linkClick(e, 'Create')}}>Create</Buttons.Rectangle>
+                                </div>}
+                                {/* <div style={{textAlign: 'center', padding: '10px 5px', width: '30vw'}}>
+                                    <Background.Search style={{color: 'black'}}>Facilities:</Background.Search>
+                                    <Cards.Test></Cards.Test>
+                                </div> */}
+                                
+                                {entry && data["Item"] !== '' &&
+                                <Entries.Write form={form}>{itemNo}</Entries.Write>}
                                 {form === 'Update' &&
                                 <div>
                                     <Buttons.Round onClick={(e) => buttonClick(e)}>x</Buttons.Round>
                                 </div>}
+
                             </Features.Section>
                             <Features.Sub>Change Content On Existing Items</Features.Sub>
                         </Crud.Card>}
@@ -180,18 +205,31 @@ export default function Main() {
                         { (form === 'Delete' || form === '') &&
                         <Crud.Card onClick={() => cardSelect('Delete')} style={cardStyle} src={del}>
                             <Features.Section>
-                                <div>
-                                <Features.Statement>
-                                    Delete
-                                </Features.Statement>
-                                {form === 'Delete' &&
-                                    <Crud.Search value={itemNo} onChange={(e) => setItemNo(e.target.value)} onKeyDown={(e) => keyDown(e)}/>}
+                                <div style={{padding: '20px'}}>
+                                    <Features.Statement>
+                                        Delete
+                                    </Features.Statement>
+                                    {form === 'Delete' &&
+                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false)}} onKeyDown={(e) => keyDown(e)}/>}
                                 </div>
+                                { form === 'Delete' && data['Item'] === ''&&
+                                <div style={{textAlign: 'center', padding: '25vh 5px'}}>
+                                    <Background.Search style={{color: 'black'}}>This Item Does Not Exists.</Background.Search>
+                                    <Background.Search style={{color: 'black'}}>Would You Like To Create This Item?</Background.Search>
+                                    <Buttons.Rectangle onClick={(e) => {linkClick(e, 'Create')}}>Create</Buttons.Rectangle>
+                                </div>}
+                                {/* <div style={{textAlign: 'center', padding: '10px 5px', width: '30vw'}}>
+                                    <Background.Search style={{color: 'black'}}>Facilities:</Background.Search>
+                                    <Cards.Test></Cards.Test>
+                                </div> */}
                                 
+                                {entry && data["Item"] !== '' &&
+                                <Entries.Write form={form}>{itemNo}</Entries.Write>}
                                 {form === 'Delete' &&
                                 <div>
                                     <Buttons.Round onClick={(e) => buttonClick(e)}>x</Buttons.Round>
                                 </div>}
+
                             </Features.Section>
                             <Features.Sub>Delete Label Content From Existing Items</Features.Sub>
                         </Crud.Card>}

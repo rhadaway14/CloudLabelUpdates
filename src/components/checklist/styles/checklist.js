@@ -11,16 +11,18 @@ font-family: Inknut Antiqua, sans-serif;
 
 
 export const UL = styled.ul`
-margin: 0 auto;
+margin: 15px auto;
 padding: 10px 20px;
 font-family: Inknut Antiqua, sans-serif;
 // position: absolute;
 // top: 0;
 // left: 50%;
 // transform: translate(-50%, -50%);
-// background: #00151f;
-width: 200px;
-border: 1px solid rgba(0,0,0,0.5)
+background: #fff;
+width: 400px;
+border: 1px solid rgba(0,0,0,0.5);
+border-radius: 15px;
+
 `;
 
 export const LI = styled.li`
@@ -38,7 +40,7 @@ export const LI = styled.li`
 export const Label =  styled.label`
     cursor: pointer;
     padding-left: 30px;
-    font-size: 15px;
+    font-size: 18px;
     color: #000;
 `;
 
@@ -63,8 +65,8 @@ export const Check = styled.span`
         left: 3px;
         bottom: 3px;
         right: 3px;
-        background: #000b10;
-        transition: 0.5s;
+        background: #fff;
+        transition: 0.5s ease-in-out;
         border-radious: 2px;
         transform: translateX(185px);
     }
@@ -76,7 +78,7 @@ export const Input = styled.input`
     opacity: 0;
 
     &:checked + ${Check}: before {
-        background: #0f6da1;
+        background: #fff;
         box-shadow: 0 0 15px #0f6da1;
         transform: translateX(0px)
     }

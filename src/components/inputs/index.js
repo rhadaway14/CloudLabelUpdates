@@ -44,6 +44,6 @@ Inputs.TextArea = function InputsTextArea({children, ...restProps}) {
     return <TextArea required={"required"} {...restProps}/>
 }
 
-Inputs.Submit = function InputSubmit({children, ...restProps}) {
-    return <Submit type={"submit"} value={"Submit"} {...restProps}/>
+Inputs.Submit = function InputSubmit({value, children, ...restProps}) {
+    return <Submit type={"submit"} value={value} {...restProps}/>
 }
