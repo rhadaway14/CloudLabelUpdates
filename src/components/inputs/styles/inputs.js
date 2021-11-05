@@ -1,10 +1,30 @@
 import styled from 'styled-components';
 
+export const Submit = styled.p`
+    border: none;
+    padding: 10px 30px;
+    cursor: pointer;
+
+    background: #fff;
+    color: #000;
+    font-size: 18px;
+    border-radius: 2px;
+    width: 52px;
+    // height: 10px;
+    text-align: center;
+    border: 2px solid #fff;
+
+    &:hover {
+
+    }
+    
+`;
+
 export const Container = styled.div`
     width: 90%;
     padding: 20px;
     border-radius: 15px;
-
+    transition: 0.5s;
 `;
 
 export const Title = styled.h2`
@@ -120,17 +140,26 @@ export const TextArea = styled.textarea`
     
 `;
 
-export const Submit = styled.input`
-    border: none;
-    padding: 7px 35px;
-    cursor: pointer;
-    outline: none;
-    background: #fff;
-    color: #000;
-    font-size: 18px;
-    border-radius: 2px;
+export const Wrap = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: #000;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:Poppins, sans-serif;
+    border-radius: 15px;
 
-    &:submit + ${Container} {
-        background: white;
+    & ${Submit}:checked + ${Container} {
+        transform: rotateY(180deg);
+    
     }
 `;
+
+export const Label = styled.label`
+    color: white;
+`;
+
+

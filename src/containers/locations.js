@@ -1,9 +1,9 @@
 import Check from '../components/check/index';
 import Checklist from '../components/checklist';
 
-export default function Locations({children, ...restProps}) {
+export default function Locations({faci, onClick, children, ...restProps}) {
     return <>
-        <div style={{display: 'flex',
+        {/* <div style={{display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             width: '100%',
@@ -14,38 +14,38 @@ export default function Locations({children, ...restProps}) {
             boxSizing: 'border-box',
             fontFamily:"'Poppins', sans-serif",
             borderRadius: '15px'
-            }}>
+            }}> */}
         <Checklist.UL>
             <Checklist.LI>
             <Check.Label>
-                <Check.Input/>
+                <Check.Input faci={faci}/>
                 Salt Lake
             </Check.Label>
             </Checklist.LI>
             <Checklist.LI>
             <Check.Label>
-                <Check.Input/>
+                <Check.Input faci={faci}/>
                 Buckeye
             </Check.Label>
             </Checklist.LI>
             <Checklist.LI>
             <Check.Label>
-                <Check.Input/>
+                <Check.Input faci={faci}/>
                 Deland
             </Check.Label>
             </Checklist.LI>
             <Checklist.LI>
             <Check.Label>
-                <Check.Input/>
+                <Check.Input faci={faci}/>
                 Glendive
             </Check.Label>
             </Checklist.LI>
             <Checklist.LI>
             <Check.Label>
-                <Check.Input/>
+                <Check.Input faci={faci}/>
                 Williamson
             </Check.Label>
             </Checklist.LI>
         </Checklist.UL>
-        </div>
+        {/* </div> */}
         </>}

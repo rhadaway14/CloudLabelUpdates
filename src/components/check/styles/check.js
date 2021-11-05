@@ -6,27 +6,28 @@ export const ListContainer = styled.div`
 `;
 
 export const Center = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    transform: translate(-50%,-50%);
+    // position: absolute;
+    // top: 50%;
+    // left: 50%;
+    // width: 100%;
+    // transform: translate(-50%,-50%);
     text-align: center;
 `;
 
 export const Label = styled.label`
-    font-size: 20px;
+    font-size: 18px;
     
 `;
 
 export const Input = styled.input`
     position: relative;
-    top: 15px;
-    width: 40px;
-    height: 40px;
+    top: 5px;
+    width: 20px;
+    height: 20px;
     -webkit-appearance: none;
     outline: none;
     transition: 0.5s;
+    margin-right: 10px;
 
     &:before {
         content: '';
@@ -35,7 +36,7 @@ export const Input = styled.input`
         left: 0;
         width: 100%;
         height: 100%;
-        border: 4px solid #000;
+        border: 2px solid #000;
         box-sizing: border-box;
         transition: 0.5s;
     }
@@ -43,7 +44,7 @@ export const Input = styled.input`
     &:checked:before {
         border-left: none;
         border-top: none;
-        width: 20px;
+        width: 10px;
         border-color: #000;
         transform: rotate(45deg) translate(5px, -10px);
     }

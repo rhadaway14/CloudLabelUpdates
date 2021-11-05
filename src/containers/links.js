@@ -8,10 +8,10 @@ export default function Links({children, ...restProps}) {
     return <></>
 }
 
-Links.Button = function LinksButton({ children, ...restProps}){
+Links.Button = function LinksButton({ onClick, children, ...restProps}){
     return <>
         <BTest.Anchor>
-            <BTest.Span>
+            <BTest.Span onClick={onClick}>
                 {children}
             </BTest.Span>
         </BTest.Anchor>

@@ -11,10 +11,10 @@ Check.Center = function CheckCenter({children, ...restProps}) {
     return <Center {...restProps}>{children}</Center>
 }
 
-Check.Label = function CheckLabel({children, ...restProps}) {
+Check.Label = function CheckLabel({ onClick, children, ...restProps}) {
     return <Label {...restProps}>{children}</Label>
 }
 
-Check.Input = function CheckInput({children, ...restProps}) {
-    return <Input type={"checkbox"} name={""} {...restProps}/>
+Check.Input = function CheckInput({ faci, children, ...restProps}) { 
+    return <Input type={"checkbox"} onClick={(e) => faci(e.target.nextSibling.data, e.target.checked)} {...restProps}/>
 }

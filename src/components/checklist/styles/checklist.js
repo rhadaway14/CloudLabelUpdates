@@ -11,15 +11,15 @@ font-family: Inknut Antiqua, sans-serif;
 
 
 export const UL = styled.ul`
-margin: 15px auto;
-padding: 10px 20px;
+margin: 15px 10px;
+padding: 10px 10px;
 font-family: Inknut Antiqua, sans-serif;
 // position: absolute;
 // top: 0;
 // left: 50%;
 // transform: translate(-50%, -50%);
 background: #fff;
-width: 400px;
+width: 200px;
 border: 1px solid rgba(0,0,0,0.5);
 border-radius: 15px;
 

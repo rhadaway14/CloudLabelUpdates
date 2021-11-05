@@ -85,7 +85,7 @@ font-weight: 700;
 `;
 
 export const Sub = styled.div`
-font-size: 25px;
+font-size: 18px;
 color: black;
 // position: absolute;
 // top: 0;
@@ -93,7 +93,8 @@ color: black;
 font-family: 'Michroma', sans-serif;
 filter: opacity(0%);
 margin-top: 0px;
-margin-left: 8vw;
+margin-left: 15px;
+// width: 100px;
 transform: translateY(-100px);
 
 ${Card}:hover & {

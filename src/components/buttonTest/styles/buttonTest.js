@@ -10,15 +10,15 @@ export const Case = styled.div`
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: #fff;
+    background: #000;
 `;
 
 export const ANC = styled.a`
     position: relative;
     display: inline-block;
     padding: 15px 30px;
-    border: 2px solid #111;
-    color: black;
+    border: 2px solid #fff;
+    color: #000;
     text-decoration: none;
     font-weight: 700;
     font-size: 20px;
@@ -37,7 +37,7 @@ export const ANC = styled.a`
         left: -2px;
         width: calc(100% + 4px);
         height: calc(100% - 12px);
-        background: #fff;
+        background: #000;
         // background: red;
         transition: 0.5s ease-in-out;
         transform: scaleY(1);
@@ -57,7 +57,7 @@ export const ANC = styled.a`
         top: -2px;
         height: calc(100% + 4px);
         width: calc(100% - 12px);
-        background: #fff;
+        background: #000;
         // background: red;
         transition: 0.5s ease-in-out;
         transform: scaleX(1);
@@ -72,6 +72,7 @@ export const ANC = styled.a`
 
 export const BSpan = styled.span`
     position: relative;
-    z-index: 4S;
+    color:white;
+    z-index: 4;
 
 `;

@@ -1,26 +1,17 @@
+import { Input } from "../components/forms/styles/forms";
 import Inputs from "../components/inputs";
 import Forms from "../containers/forms";
+import Locations from "./locations";
+import Links from "./links";
 
 export default function Entries({children, ...restProps}) {
     return <></>
 }
 
-Entries.Write = function EntriesWrite({form, children, ...restProps}) {
+Entries.Write = function EntriesWrite({ faci, onClick, form, children, ...restProps}) {
     return(
-
-        <div style={{display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-            // minHeight: '100vh',
-            background: '#000',
-            margin: '0',
-            padding: '0',
-            boxSizing: 'border-box',
-            fontFamily:"'Poppins', sans-serif",
-            borderRadius: '15px'
-            }}>
-
+        <>
+        <Inputs.Wrapper>
         <Inputs>
             <Inputs.Title>Item Number: {children}</Inputs.Title>
             <Inputs.Row>
@@ -40,12 +31,17 @@ Entries.Write = function EntriesWrite({form, children, ...restProps}) {
             </Inputs.Row>
             <Inputs.Row>
                 <Inputs.Col>
-                    {form !== 'Read' &&
-                    <Inputs.Submit value={form}/>}
+                {form !== 'Read' &&
+                    <Links.Button onClick={onClick}>{form}</Links.Button>}
                 </Inputs.Col>
             </Inputs.Row>
+            
         </Inputs>
-        </div>
+        <Locations faci={faci}></Locations>
+        </Inputs.Wrapper>
+
+        
+        </>
 
     )
 };

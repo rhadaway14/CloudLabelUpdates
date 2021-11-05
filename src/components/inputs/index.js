@@ -1,7 +1,8 @@
 import React from 'react'
+import { Button } from '../forms/styles/forms';
 
 import { Container, Title, Row, Col, InputBox, Input,
-    Text, Line, TextArea, Submit, InputBoxTextArea } from './styles/inputs';
+    Text, Line, TextArea, Submit, InputBoxTextArea, Wrap, Label} from './styles/inputs';
 
 
 export default function Inputs({ children, ...restProps }) {
@@ -45,5 +46,13 @@ Inputs.TextArea = function InputsTextArea({children, ...restProps}) {
 }
 
 Inputs.Submit = function InputSubmit({value, children, ...restProps}) {
-    return <Submit type={"submit"} value={value} {...restProps}/>
+    return <Submit {...restProps}>{children}</Submit>
+}
+
+Inputs.Wrapper = function InputsWrapper({children, ...restProps}){
+    return <Wrap {...restProps}>{children}</Wrap>
+}
+
+Inputs.Label = function InputsLabel({children, ...restProps}) {
+    return <Label {...restProps}>{children}</Label>
 }

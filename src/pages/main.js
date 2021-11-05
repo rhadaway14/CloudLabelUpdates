@@ -24,9 +24,12 @@ export default function Main() {
     const [itemNo, setItemNo] = useState('')
     const [data, setData] = useState({"Item": ''})
     const [entry, setEntry] = useState(false)
+    const [faciList, setFaciList] = useState(new Array)
+    // const [payload, setPayload] = useState({"fine": "ok"})
     const isMounted = useRef(false);
 
     let fullStyle = {marginRight: '0px', height: '85vh', width: '70vw'}
+    var facilities = []
 
     function searchITNO(Item) {
         let url = `http://localhost:5015/search/${Item}`
@@ -51,13 +54,13 @@ export default function Main() {
         setCardStyle(fullStyle);
         switch(crud) {
             case 'Create':
-                setDirections('Search to find out if the item already exists.');
+                setDirections('Search for the item you want to create. Then enter info about the item.')
                 break;
             case 'Read':
                 setDirections('Search for the item you want to review.');
                 break;
             case 'Update':
-                setDirections('Search for the item you want to update.');
+                setDirections('Search for the item you want to update. Then change info about the item.');
                 break;
             case 'Delete':
                 setDirections('Search for the item you want to delete');
@@ -68,9 +71,10 @@ export default function Main() {
     }
 
 
-    function keyDown(e) {
+    function keyDown(e, crud) {
         if(e.key==='Enter'){
             searchITNO(itemNo)
+            cardSelect(crud)
         }
     };
 
@@ -91,13 +95,75 @@ export default function Main() {
         console.log(form)
         e.stopPropagation()
     }
+
+    function createData() {
+        console.log(isMounted.current)
+        if(isMounted.current) {
+        const header = new Headers()
+        header.append('Content-type','application/json')
+        // header.append('Access-Control-Allow-Origin', 'http://dockerhost:3001')
+        header.append('Access-Control-Allow-Origin', 'http://localhost:3001')
+
+
+        
+        let jbody = JSON.stringify({
+            "faciList": faciList
+        });
+
+        // fetch('http://dockerhost:5010/ST/Submit/OP', {
+        fetch('http://localhost:5015/Create', {
+            method: "POST",
+            body: jbody,
+            headers: header
+        })
+    }
+    };
+
+    function updateData() {
+
+    };
+
+    function deleteData() {
+
+    };
     
+    function remove(list, faci) {
+        
+        console.log(list)
+        console.log(typeof list)
+        for (let i = 0; i < list.length; i++) {
+            if (list[i] === faci) {console.log(list[i]);
+            list.splice(i,1)}
+        return list}
+    }
+
+
+    const faci = (faci, checked) => {
+
+
+            console.log("1", facilities)
+        if (checked) {
+            console.log(checked, faci)
+            facilities.push(faci)
+            setFaciList(facilities)
+            
+        } else {
+            console.log(checked)
+            remove(facilities, faci)
+            setFaciList(facilities)
+        }
+    
+        console.log(facilities)
+        }
+        
+
+
     return(
         <>
             <div style={{overflow: 'hidden'}}>
                 
                 <div style={{display: 'flex', justifyContent: 'space-between', minWidth: '800px'}}>
-                    <div style={{marginLeft: '30px', borderRight: '2px solid black', width: '400px', padding: ' 0px 40px',
+                    <div style={{marginLeft: '30px', borderRight: '2px solid black', width: '300px', padding: ' 0px 40px',
                      position: '-webkit-sticky', top: '70px',left: '0', margin: '40px 0px', height: '600px' }}>
                         <Background.TitleTop>CloudLabel</Background.TitleTop>
                         <Background.Text>{directions}</Background.Text>
@@ -113,7 +179,7 @@ export default function Main() {
                                         Create
                                     </Features.Statement>
                                     {form === 'Create' &&
-                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false)}} onKeyDown={(e) => keyDown(e)}/>}
+                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false)}} onKeyDown={(e) => keyDown(e,'Create')}/>}
                                 </div>
                                 { form === 'Create' && data['Item'] !== ''&&
                                 <div style={{textAlign: 'center', padding: '25vh 5px'}}>
@@ -121,17 +187,15 @@ export default function Main() {
                                     <Background.Search style={{color: 'black'}}>Would You Like To Update This Item?</Background.Search>
                                     <Buttons.Rectangle onClick={(e) => {linkClick(e, 'Update')}}>Update</Buttons.Rectangle>
                                 </div>}
-                                {/* <div style={{textAlign: 'center', padding: '10px 5px', width: '30vw'}}>
-                                    <Background.Search style={{color: 'black'}}>Facilities:</Background.Search>
-                                    <Cards.Test></Cards.Test>
-                                </div> */}
+
                                 
-                                {entry && data["Item"] === '' &&
-                                <Entries.Write form={form}>{itemNo}</Entries.Write>}
+                                {entry && data["Item"] === '' && itemNo !== ''&&
+                                <Entries.Write faci={faci} form={form} onClick={() => console.log(faciList)}>{itemNo}</Entries.Write>}
+                                {/* <Entries.Write faci={setFaciList} form={form} onClick={() => createData()}>{itemNo}</Entries.Write>} */}
                                 {/* // <Locations></Locations>} */}
                                 {form === 'Create' &&
                                 <div>
-                                    <Buttons.Round onClick={(e) => buttonClick(e)}>x</Buttons.Round>
+                                    <Buttons.Round onClick={() => buttonClick()}>x</Buttons.Round>
                                 </div>}
 
                             </Features.Section>
@@ -146,20 +210,17 @@ export default function Main() {
                                         Read
                                     </Features.Statement>
                                     {form === 'Read' &&
-                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false)}} onKeyDown={(e) => keyDown(e)}/>}
+                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false)}} onKeyDown={(e) => keyDown(e, 'Read')}/>}
                                 </div>
-                                { form === 'Read' && data['Item'] === ''&&
+                                { form === 'Read' && data['Item'] === '' && itemNo !== '' &&
                                 <div style={{textAlign: 'center', padding: '25vh 5px'}}>
                                     <Background.Search style={{color: 'black'}}>This Item Does Not Exists.</Background.Search>
                                     <Background.Search style={{color: 'black'}}>Would You Like To Create This Item?</Background.Search>
                                     <Buttons.Rectangle onClick={(e) => {linkClick(e, 'Create')}}>Create</Buttons.Rectangle>
                                 </div>}
-                                {/* <div style={{textAlign: 'center', padding: '10px 5px', width: '30vw'}}>
-                                    <Background.Search style={{color: 'black'}}>Facilities:</Background.Search>
-                                    <Cards.Test></Cards.Test>
-                                </div> */}
+
                                 
-                                {entry && data["Item"] !== '' &&
+                                {entry && data["Item"] !== '' && itemNo !== ''&&
                                 <Entries.Write form={form}>{itemNo}</Entries.Write>}
                                 {form === 'Read' &&
                                 <div>
@@ -178,21 +239,17 @@ export default function Main() {
                                         Update
                                     </Features.Statement>
                                     {form === 'Update' &&
-                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false)}} onKeyDown={(e) => keyDown(e)}/>}
+                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false)}} onKeyDown={(e) => keyDown(e, 'Update')}/>}
                                 </div>
-                                { form === 'Update' && data['Item'] === ''&&
+                                { form === 'Update' && data['Item'] === '' && itemNo !== '' &&
                                 <div style={{textAlign: 'center', padding: '25vh 5px'}}>
                                     <Background.Search style={{color: 'black'}}>This Item Does Not Exists.</Background.Search>
                                     <Background.Search style={{color: 'black'}}>Would You Like To Create This Item?</Background.Search>
                                     <Buttons.Rectangle onClick={(e) => {linkClick(e, 'Create')}}>Create</Buttons.Rectangle>
                                 </div>}
-                                {/* <div style={{textAlign: 'center', padding: '10px 5px', width: '30vw'}}>
-                                    <Background.Search style={{color: 'black'}}>Facilities:</Background.Search>
-                                    <Cards.Test></Cards.Test>
-                                </div> */}
                                 
                                 {entry && data["Item"] !== '' &&
-                                <Entries.Write form={form}>{itemNo}</Entries.Write>}
+                                <Entries.Write form={form} onClick={updateData()}>{itemNo}</Entries.Write>}
                                 {form === 'Update' &&
                                 <div>
                                     <Buttons.Round onClick={(e) => buttonClick(e)}>x</Buttons.Round>
@@ -210,21 +267,17 @@ export default function Main() {
                                         Delete
                                     </Features.Statement>
                                     {form === 'Delete' &&
-                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false)}} onKeyDown={(e) => keyDown(e)}/>}
+                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false)}} onKeyDown={(e) => keyDown(e, 'Delete')}/>}
                                 </div>
-                                { form === 'Delete' && data['Item'] === ''&&
+                                { form === 'Delete' && data['Item'] === '' && itemNo !== '' &&
                                 <div style={{textAlign: 'center', padding: '25vh 5px'}}>
                                     <Background.Search style={{color: 'black'}}>This Item Does Not Exists.</Background.Search>
                                     <Background.Search style={{color: 'black'}}>Would You Like To Create This Item?</Background.Search>
                                     <Buttons.Rectangle onClick={(e) => {linkClick(e, 'Create')}}>Create</Buttons.Rectangle>
                                 </div>}
-                                {/* <div style={{textAlign: 'center', padding: '10px 5px', width: '30vw'}}>
-                                    <Background.Search style={{color: 'black'}}>Facilities:</Background.Search>
-                                    <Cards.Test></Cards.Test>
-                                </div> */}
                                 
                                 {entry && data["Item"] !== '' &&
-                                <Entries.Write form={form}>{itemNo}</Entries.Write>}
+                                <Entries.Write form={form} onClick={updateData()}>{itemNo}</Entries.Write>}
                                 {form === 'Delete' &&
                                 <div>
                                     <Buttons.Round onClick={(e) => buttonClick(e)}>x</Buttons.Round>
