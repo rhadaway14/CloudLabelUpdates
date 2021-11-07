@@ -4,11 +4,11 @@ export default function Forms({ children, ...restProps }) {
     return <></>
 }
 
-Forms.Text = function CardsCreate({onChange, children, ...restProps}) {
+Forms.Text = function CardsCreate({value, onChange, children, ...restProps}) {
     return <>
             <Inputs.Col>
                 <Inputs.InputBox>
-                    <Inputs.Input onChange={onChange} {...restProps}/>
+                    <Inputs.Input value={value} onChange={onChange} {...restProps}/>
                     <Inputs.Text>{children}</Inputs.Text>
                     <Inputs.Line></Inputs.Line>
                 </Inputs.InputBox>
@@ -16,11 +16,11 @@ Forms.Text = function CardsCreate({onChange, children, ...restProps}) {
             </>
     }
 
-Forms.TextArea = function FormsTextArea({children, ...restProps}) {
+Forms.TextArea = function FormsTextArea({value, onChange, children, ...restProps}) {
     return <>
             <Inputs.Col>
                     <Inputs.InputBoxTextArea>
-                        <Inputs.TextArea/>
+                        <Inputs.TextArea value={value} onChange={onChange} {...restProps}/>
                         <Inputs.Text>{children}</Inputs.Text>
                         <Inputs.Line></Inputs.Line>
                     </Inputs.InputBoxTextArea>

@@ -29,8 +29,8 @@ Inputs.InputBoxTextArea = function InputsInputTextArea({children, ...restProps})
     return <InputBoxTextArea {...restProps}>{children}</InputBoxTextArea>
 }
 
-Inputs.Input = function InputsInput({onChange, children, ...restProps}) {
-    return <Input type={"text"} name={""} onChange={onChange} required={"required"} {...restProps}/>
+Inputs.Input = function InputsInput({value, onChange, children, ...restProps}) {
+    return <Input value={value} type={"text"} name={""} onChange={onChange} required={"required"} {...restProps}/>
 }
 
 Inputs.Text = function InputsText({children, ...restProps}) {

@@ -15,21 +15,30 @@ import Entries from "../containers/entries";
 import Locations from "../containers/locations";
 
 
-
+var facilities = []
 
 export default function Main() {
-    const [form, setForm] = useState('')
+    const [form, setForm] = useState('');
     const [cardStyle, setCardStyle] = useState({})
     const [directions, setDirections] = useState('Choose an action to get started.')
     const [itemNo, setItemNo] = useState('')
     const [data, setData] = useState({"Item": ''})
     const [entry, setEntry] = useState(false)
     const [faciList, setFaciList] = useState(new Array)
-    // const [payload, setPayload] = useState({"fine": "ok"})
+    const [displayName, setDisplayName] = useState('');
+    const [colorBar, setColorBar] = useState('');
+    const [contains, setContains] = useState('');
+    const [description, setDescription] = useState('')
+    const [company, setCompany] = useState('')
+    const [address, setAddress] = useState('')
+    const [phone, setPhone] = useState('');
+    const [ccn, setCcn] = useState('');
+    const [instructions, setInstructions] = useState('')
     const isMounted = useRef(false);
+    const isClicked = useRef(false);
 
     let fullStyle = {marginRight: '0px', height: '85vh', width: '70vw'}
-    var facilities = []
+    
 
     function searchITNO(Item) {
         let url = `http://localhost:5015/search/${Item}`
@@ -47,6 +56,7 @@ export default function Main() {
             isMounted.current = true;
             setEntry(false)
         }
+        isClicked.current = false
     }, [data])
 
     function cardSelect(crud){
@@ -97,6 +107,7 @@ export default function Main() {
     }
 
     function createData() {
+        if (!isClicked.current){
         console.log(isMounted.current)
         if(isMounted.current) {
         const header = new Headers()
@@ -104,11 +115,32 @@ export default function Main() {
         // header.append('Access-Control-Allow-Origin', 'http://dockerhost:3001')
         header.append('Access-Control-Allow-Origin', 'http://localhost:3001')
 
-
+        let listAttributes = []
+        for (let i = 0; i < facilities.length; i++) {
+            listAttributes.push({
+                "Facility": facilities[i],
+                "CustomAttributes": {
+                 "CustomPhone": phone,
+                 "CustomCompany": company,
+                 "DisplayName": displayName,
+                 "UsageIndstructions": instructions,
+                 "CustomAddress": address,
+                 "CustomDescription": description,
+                 "CustomCCN": ccn,
+                 "ColorBar": colorBar,
+                 "CustomContains": contains
+                },
+                "Printer": "PrinterNo2",
+                "Template": "TemplateNo2"
+            }
+                )
+        }
         
-        let jbody = JSON.stringify({
-            "faciList": faciList
-        });
+        let jbody = JSON.stringify(
+            {
+            "Item": itemNo,
+            "ListAttributes": listAttributes
+           });
 
         // fetch('http://dockerhost:5010/ST/Submit/OP', {
         fetch('http://localhost:5015/Create', {
@@ -116,6 +148,19 @@ export default function Main() {
             body: jbody,
             headers: header
         })
+        .then(() => {
+        isMounted.current = false;
+        setForm('');
+        setData({"Item": ''})
+        setItemNo('');
+        })
+        .then(() => {  
+        setDirections('Choose an action to get started.');
+        setCardStyle({});
+        })
+        .then(facilities = [])
+        .then(isClicked.current = true)
+    }
     }
     };
 
@@ -127,14 +172,12 @@ export default function Main() {
 
     };
     
-    function remove(list, faci) {
+    function remove(faci) {
         
-        console.log(list)
-        console.log(typeof list)
-        for (let i = 0; i < list.length; i++) {
-            if (list[i] === faci) {console.log(list[i]);
-            list.splice(i,1)}
-        return list}
+        for (let i = 0; i < facilities.length; i++) {
+            if (facilities[i] === faci) {
+            facilities.splice(i,1)}
+        }
     }
 
 
@@ -149,7 +192,7 @@ export default function Main() {
             
         } else {
             console.log(checked)
-            remove(facilities, faci)
+            remove(faci)
             setFaciList(facilities)
         }
     
@@ -188,14 +231,16 @@ export default function Main() {
                                     <Buttons.Rectangle onClick={(e) => {linkClick(e, 'Update')}}>Update</Buttons.Rectangle>
                                 </div>}
 
-                                
                                 {entry && data["Item"] === '' && itemNo !== ''&&
-                                <Entries.Write faci={faci} form={form} onClick={() => console.log(faciList)}>{itemNo}</Entries.Write>}
+                                <Entries.Write faci={faci} form={form} dname={setDisplayName} 
+                                    cbar={setColorBar} cont={setContains} desc={setDescription} 
+                                    comp={setCompany} addr={setAddress} phon={setPhone} ccn={setCcn} inst={setInstructions}
+                                    onClick={() => createData()}>{itemNo}</Entries.Write>}
                                 {/* <Entries.Write faci={setFaciList} form={form} onClick={() => createData()}>{itemNo}</Entries.Write>} */}
                                 {/* // <Locations></Locations>} */}
                                 {form === 'Create' &&
                                 <div>
-                                    <Buttons.Round onClick={() => buttonClick()}>x</Buttons.Round>
+                                    <Buttons.Round onClick={(e) => buttonClick(e)}>x</Buttons.Round>
                                 </div>}
 
                             </Features.Section>
@@ -221,7 +266,7 @@ export default function Main() {
 
                                 
                                 {entry && data["Item"] !== '' && itemNo !== ''&&
-                                <Entries.Write form={form}>{itemNo}</Entries.Write>}
+                                <Entries.Read readonly={data} >{itemNo}</Entries.Read>}
                                 {form === 'Read' &&
                                 <div>
                                     <Buttons.Round onClick={(e) => buttonClick(e)}>x</Buttons.Round>
