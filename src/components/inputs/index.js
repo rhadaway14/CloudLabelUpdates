@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from '../forms/styles/forms';
 
 import { Container, Title, Row, Col, InputBox, Input,
-    Text, Line, TextArea, Submit, InputBoxTextArea, Wrap, Label} from './styles/inputs';
+    Text, Line, TextArea, Submit, InputBoxTextArea, Wrap, Label, Read, ReadTextArea} from './styles/inputs';
 
 
 export default function Inputs({ children, ...restProps }) {
@@ -33,6 +33,10 @@ Inputs.Input = function InputsInput({value, onChange, children, ...restProps}) {
     return <Input value={value} type={"text"} name={""} onChange={onChange} required={"required"} {...restProps}/>
 }
 
+Inputs.Read = function InputsRead({value, onChange, children, ...restProps}) {
+    return <Read readOnly={true} value={value} type={"text"} name={""} onChange={onChange} required={"required"} {...restProps}/>
+}
+
 Inputs.Text = function InputsText({children, ...restProps}) {
     return <Text {...restProps}>{children}</Text>
 }
@@ -43,6 +47,10 @@ Inputs.Line = function InputsLine({children, ...restProps}){
 
 Inputs.TextArea = function InputsTextArea({children, ...restProps}) {
     return <TextArea required={"required"} {...restProps}/>
+}
+
+Inputs.ReadTextArea = function InputsReadTextArea({children, ...restProps}) {
+    return <ReadTextArea readOnly={true} required={"required"} {...restProps}/>
 }
 
 Inputs.Submit = function InputSubmit({value, children, ...restProps}) {

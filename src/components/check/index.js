@@ -15,6 +15,7 @@ Check.Label = function CheckLabel({ onClick, children, ...restProps}) {
     return <Label {...restProps}>{children}</Label>
 }
 
-Check.Input = function CheckInput({ faci, children, ...restProps}) { 
-    return <Input type={"checkbox"} onClick={(e) => faci(e.target.nextSibling.data, e.target.checked)} {...restProps}/>
+Check.Input = function CheckInput({ wh, faci, children, ...restProps}) { 
+    // return <Input type={"checkbox"} onClick={(e) => faci(e.target.nextSibling.data, e.target.checked)} {...restProps}/>
+    return <Input type={"checkbox"} onClick={(e) => faci(wh, e.target.checked)} {...restProps}/>
 }

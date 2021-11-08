@@ -39,6 +39,15 @@ export default function Main() {
 
     let fullStyle = {marginRight: '0px', height: '85vh', width: '70vw'}
     
+    function facilitiesData(data) {
+        if (data['Item'] !== '') {
+            for (let i = 0; i < data['ListAttributes'].length; i++) {
+                facilities.push(data['ListAttributes'][i]['Facility'])
+                console.log(facilities)
+        }} else {
+            facilities = []
+        }
+    }
 
     function searchITNO(Item) {
         let url = `http://localhost:5015/search/${Item}`
@@ -52,6 +61,7 @@ export default function Main() {
         console.log(data)
         if (isMounted.current) {
             setEntry(true)
+            facilitiesData(data)
         } else {
             isMounted.current = true;
             setEntry(false)
@@ -83,6 +93,7 @@ export default function Main() {
 
     function keyDown(e, crud) {
         if(e.key==='Enter'){
+            facilities = []
             searchITNO(itemNo)
             cardSelect(crud)
         }
@@ -93,6 +104,7 @@ export default function Main() {
         setForm('');
         setData({"Item": ''})
         setItemNo('');
+        facilities = []
         
         
         setDirections('Choose an action to get started.');
@@ -266,7 +278,7 @@ export default function Main() {
 
                                 
                                 {entry && data["Item"] !== '' && itemNo !== ''&&
-                                <Entries.Read readonly={data} >{itemNo}</Entries.Read>}
+                                <Entries.Read readonly={data} faci={faci}>{itemNo}</Entries.Read>}
                                 {form === 'Read' &&
                                 <div>
                                     <Buttons.Round onClick={(e) => buttonClick(e)}>x</Buttons.Round>
@@ -294,7 +306,10 @@ export default function Main() {
                                 </div>}
                                 
                                 {entry && data["Item"] !== '' &&
-                                <Entries.Write form={form} onClick={updateData()}>{itemNo}</Entries.Write>}
+                                <Entries.Update faci={faci} form={form} dname={setDisplayName} 
+                                cbar={setColorBar} cont={setContains} desc={setDescription} 
+                                comp={setCompany} addr={setAddress} phon={setPhone} ccn={setCcn} inst={setInstructions}
+                                onClick={() => createData()} readonly={data}>{itemNo}</Entries.Update>}
                                 {form === 'Update' &&
                                 <div>
                                     <Buttons.Round onClick={(e) => buttonClick(e)}>x</Buttons.Round>

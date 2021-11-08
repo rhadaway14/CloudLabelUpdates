@@ -113,6 +113,30 @@ export const Input = styled.input`
     }
 `;
 
+export const Read = styled.input`
+    position: absolute;
+    width: 100% ;
+    height: 100%;
+    background: transparent;
+    box-shadow: none;
+    border:none;
+    outline: none;
+    font-size: 18px;
+    padding: 0 10px;
+    z-index: 1;
+    color: #000;
+
+    &:required + ${Text} {
+        top: -35px;
+        left: -10px;
+    }
+
+    &:required ~ ${Line} {
+        height: 100%
+    }
+`;
+
+
 
 export const TextArea = styled.textarea`
     height: 100%;
@@ -135,6 +159,32 @@ export const TextArea = styled.textarea`
     }
 
     &:focus ~ ${Line}, &:valid ~ ${Line} {
+        height: 100%
+    }
+    
+`;
+
+export const ReadTextArea = styled.textarea`
+    height: 100%;
+    resize: none;
+    position: absolute;
+    width: 100% ;
+    height: 100%;
+    background: transparent;
+    box-shadow: none;
+    border:none;
+    outline: none;
+    font-size: 18px;
+    padding: 0 10px;
+    z-index: 1;
+    color: #000;
+
+    &:required + ${Text} {
+        top: -35px;
+        left: -10px;
+    }
+
+    &:required ~ ${Line} {
         height: 100%
     }
     

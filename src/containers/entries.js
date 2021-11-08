@@ -46,41 +46,78 @@ Entries.Write = function EntriesWrite({ dname, cbar, cont, desc, comp, addr, pho
     )
 };
 
-Entries.Read = function EntriesRead({ readonly, form, children, ...restProps}) {
+Entries.Read = function EntriesRead({ faci, readonly, form, children, ...restProps}) {
     return(
         <>
         <Inputs.Wrapper>
         <Inputs>
             <Inputs.Title>Item Number: {children}</Inputs.Title>
             <Inputs.Row>
-                <Forms.Text style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['DisplayName']}>Display Name</Forms.Text>
-                <Forms.Text style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['ColorBar']}>Color Bar</Forms.Text>
-                <Forms.Text style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['CustomContains']}>Custom Contains</Forms.Text>
-                <Forms.Text style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['CustomDescription']}>Custom Description</Forms.Text>
+                <Forms.ReadText style={{cursor: 'default'}} style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['DisplayName']}>Display Name</Forms.ReadText>
+                <Forms.ReadText style={{cursor: 'default'}} style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['ColorBar']}>Color Bar</Forms.ReadText>
+                <Forms.ReadText style={{cursor: 'default'}} style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['CustomContains']}>Custom Contains</Forms.ReadText>
+                <Forms.ReadText style={{cursor: 'default'}} style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['CustomDescription']}>Custom Description</Forms.ReadText>
             </Inputs.Row>
             <Inputs.Row>
-                <Forms.Text style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['CustomCompany']}>Custom Company</Forms.Text>
-                <Forms.Text style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['CustomAddress']}>Custom Address</Forms.Text>
-                <Forms.Text style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['CustomPhone']}>Custom Phone</Forms.Text>
-                <Forms.Text style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['CustomCCN']}>Custom CCN</Forms.Text>
+                <Forms.ReadText style={{cursor: 'default'}} style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['CustomCompany']}>Custom Company</Forms.ReadText>
+                <Forms.ReadText style={{cursor: 'default'}} style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['CustomAddress']}>Custom Address</Forms.ReadText>
+                <Forms.ReadText style={{cursor: 'default'}} style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['CustomPhone']}>Custom Phone</Forms.ReadText>
+                <Forms.ReadText style={{cursor: 'default'}} style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['CustomCCN']}>Custom CCN</Forms.ReadText>
             </Inputs.Row>
             <Inputs.Row>
-                <Forms.TextArea style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['UsageIndstructions']}>Usage Instructions</Forms.TextArea>
+                <Forms.ReadTextArea style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['UsageIndstructions']}>Usage Instructions</Forms.ReadTextArea>
             </Inputs.Row>
-            <Inputs.Row>
+            {/* <Inputs.Row>
                 <Inputs.Col>
                 
                 </Inputs.Col>
-            </Inputs.Row>
-            {/* use map */}
-                <h3 style={{color:'white'}} >{ readonly['ListAttributes'][0]['Facility']}</h3>
+            </Inputs.Row> */}
+
             
             
         </Inputs>
-
+        <Locations.Display readonly={readonly} faci={faci}></Locations.Display>
         </Inputs.Wrapper>
 
         
+        </>
+
+    )
+};
+
+Entries.Update = function EntriesUpdate({ dname, cbar, cont, desc, comp, addr, phon, ccn, inst, faci, readonly, onClick, form, children, ...restProps}) {
+    return(
+        <>
+        <Inputs.Wrapper>
+        <Inputs>
+            <Inputs.Title>Item Number: {children}</Inputs.Title>
+            <Inputs.Row>
+                <Forms.ReadText onChange={(e) => {dname(e.target.value)}} value={readonly['ListAttributes'][0]['CustomAttributes']['DisplayName']}>Display Name</Forms.ReadText>
+                <Forms.ReadText onChange={(e) => {cbar(e.target.value)}} value={readonly['ListAttributes'][0]['CustomAttributes']['ColorBar']}>Color Bar</Forms.ReadText>
+                <Forms.ReadText onChange={(e) => {cont(e.target.value)}} value={readonly['ListAttributes'][0]['CustomAttributes']['CustomContains']}>Custom Contains</Forms.ReadText>
+                <Forms.ReadText onChange={(e) => {desc(e.target.value)}} value={readonly['ListAttributes'][0]['CustomAttributes']['CustomDescription']}>Custom Description</Forms.ReadText>
+            </Inputs.Row>
+            <Inputs.Row>
+                <Forms.ReadText onChange={(e) => {comp(e.target.value)}}  value={readonly['ListAttributes'][0]['CustomAttributes']['CustomCompany']}>Custom Company</Forms.ReadText>
+                <Forms.ReadText onChange={(e) => {addr(e.target.value)}}  value={readonly['ListAttributes'][0]['CustomAttributes']['CustomAddress']}>Custom Address</Forms.ReadText>
+                <Forms.ReadText onChange={(e) => {phon(e.target.value)}}  value={readonly['ListAttributes'][0]['CustomAttributes']['CustomPhone']}>Custom Phone</Forms.ReadText>
+                <Forms.ReadText onChange={(e) => {ccn(e.target.value)}}  value={readonly['ListAttributes'][0]['CustomAttributes']['CustomCCN']}>Custom CCN</Forms.ReadText>
+            </Inputs.Row>
+            
+            <Inputs.Row>
+                
+            </Inputs.Row>
+            <Inputs.Row>
+                <Inputs.Col>
+                {form !== 'Read' &&
+                    <Links.Button onClick={onClick}>{form}</Links.Button>}
+                </Inputs.Col>
+            </Inputs.Row>
+
+        </Inputs>
+        <Locations.Update readonly={readonly} faci={faci}></Locations.Update>
+        </Inputs.Wrapper>
+
         </>
 
     )
