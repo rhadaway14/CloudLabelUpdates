@@ -97,6 +97,18 @@ export default function Main() {
             searchITNO(itemNo)
             cardSelect(crud)
         }
+        if (crud === 'Update' && data['Item'] !== '') {
+                console.log("initial")
+                setDisplayName(data['ListAttributes'][0]['CustomAttributes']['DisplayName'])
+                setColorBar(data['ListAttributes'][0]['CustomAttributes']['ColorBar'])
+                setContains(data['ListAttributes'][0]['CustomAttributes']['CustomContains'])
+                setDescription(data['ListAttributes'][0]['CustomAttributes']['CustomDescription'])
+                setCompany(data['ListAttributes'][0]['CustomAttributes']['CustomCompany'])
+                setAddress(data['ListAttributes'][0]['CustomAttributes']['CustomAddress'])
+                setPhone(data['ListAttributes'][0]['CustomAttributes']['CustomPhone'])
+                setCcn(data['ListAttributes'][0]['CustomAttributes']['CustomCCN'])
+                setInstructions(data['ListAttributes'][0]['CustomAttributes']['UsageIndstructions'])
+        }
     };
 
     function buttonClick(e) {
@@ -177,11 +189,101 @@ export default function Main() {
     };
 
     function updateData() {
+        console.log("update")
+        if (!isClicked.current){
+        console.log(isMounted.current)
+        if(isMounted.current) {
+        const header = new Headers()
+        header.append('Content-type','application/json')
+        // header.append('Access-Control-Allow-Origin', 'http://dockerhost:3001')
+        header.append('Access-Control-Allow-Origin', 'http://localhost:3001')
 
+        let listAttributes = []
+        for (let i = 0; i < facilities.length; i++) {
+            listAttributes.push({
+                "Facility": facilities[i],
+                "CustomAttributes": {
+                 "CustomPhone": phone,
+                 "CustomCompany": company,
+                 "DisplayName": displayName,
+                 "UsageIndstructions": instructions,
+                 "CustomAddress": address,
+                 "CustomDescription": description,
+                 "CustomCCN": ccn,
+                 "ColorBar": colorBar,
+                 "CustomContains": contains
+                },
+                "Printer": "PrinterNo2",
+                "Template": "TemplateNo2"
+            }
+                )
+        }
+        
+        let jbody = JSON.stringify(
+            {
+            "Item": itemNo,
+            "ListAttributes": listAttributes
+           });
+
+        // fetch('http://dockerhost:5010/ST/Submit/OP', {
+        fetch('http://localhost:5015/Update', {
+            method: "POST",
+            body: jbody,
+            headers: header
+        })
+        .then(() => {
+        isMounted.current = false;
+        setForm('');
+        setData({"Item": ''})
+        setItemNo('');
+        })
+        .then(() => {  
+        setDirections('Choose an action to get started.');
+        setCardStyle({});
+        })
+        .then(facilities = [])
+        .then(isClicked.current = true)
+    }
+    }
+    
     };
 
     function deleteData() {
+        console.log("delete")
+        if (!isClicked.current){
+        console.log(isMounted.current)
+        if(isMounted.current) {
+        const header = new Headers()
+        header.append('Content-type','application/json')
+        // header.append('Access-Control-Allow-Origin', 'http://dockerhost:3001')
+        header.append('Access-Control-Allow-Origin', 'http://localhost:3001')
 
+        
+        let jbody = JSON.stringify(
+            {
+            "Item": itemNo
+           });
+
+        // fetch('http://dockerhost:5010/ST/Submit/OP', {
+        fetch('http://localhost:5015/Delete', {
+            method: "POST",
+            body: jbody,
+            headers: header
+        })
+        .then(() => {
+        isMounted.current = false;
+        setForm('');
+        setData({"Item": ''})
+        setItemNo('');
+        })
+        .then(() => {  
+        setDirections('Choose an action to get started.');
+        setCardStyle({});
+        })
+        .then(facilities = [])
+        .then(isClicked.current = true)
+    }
+    }
     };
     
     function remove(faci) {
@@ -309,7 +411,7 @@ export default function Main() {
                                 <Entries.Update faci={faci} form={form} dname={setDisplayName} 
                                 cbar={setColorBar} cont={setContains} desc={setDescription} 
                                 comp={setCompany} addr={setAddress} phon={setPhone} ccn={setCcn} inst={setInstructions}
-                                onClick={() => createData()} readonly={data}>{itemNo}</Entries.Update>}
+                                onClick={() => updateData()} readonly={data}>{itemNo}</Entries.Update>}
                                 {form === 'Update' &&
                                 <div>
                                     <Buttons.Round onClick={(e) => buttonClick(e)}>x</Buttons.Round>
@@ -337,7 +439,8 @@ export default function Main() {
                                 </div>}
                                 
                                 {entry && data["Item"] !== '' &&
-                                <Entries.Write form={form} onClick={updateData()}>{itemNo}</Entries.Write>}
+                                <Entries.Delete faci={faci} form={form}
+                                onClick={() => deleteData()} readonly={data}>{itemNo}</Entries.Delete>}
                                 {form === 'Delete' &&
                                 <div>
                                     <Buttons.Round onClick={(e) => buttonClick(e)}>x</Buttons.Round>
