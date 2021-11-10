@@ -17,6 +17,7 @@ let items = []
 export default function Test() {
 
     const [itemList, setItemList] = useState([])
+    const [selectedImage, setSelectedImage] = useState(null)
 
     
 
@@ -35,12 +36,25 @@ export default function Test() {
     }
 
     return(<>
-        <h1>itemList</h1>
-        <h2>{itemList}</h2>
-        <input type={'text'} name={'add'}/>
-            <button onClick={() => {console.log('add'); addItem(5); console.log(itemList)}}>add</button>
-        <input type={'text'} name={'remove'}/>
-            <button onClick={() =>{console.log('remove'); removeItem(4); console.log(itemList)}}>remove</button>
+             <h1>Upload and Display Image usign React Hook's</h1>
+      {selectedImage && (
+        <div>
+        <img alt="not fount" width={"250px"} src={URL.createObjectURL(selectedImage)} />
+        <br />
+        <button onClick={()=>setSelectedImage(null)}>Remove</button>
+        </div>
+      )}
+      <br />
+     
+      <br /> 
+      <input
+        type="file"
+        name="myImage"
+        onChange={(event) => {
+          console.log(event.target.files[0]);
+          setSelectedImage(event.target.files[0]);
+        }}
+      />
         </>
 
     )}
