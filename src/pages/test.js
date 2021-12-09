@@ -12,52 +12,84 @@ import Flip from "../components/flip";
 
 import img from "../images/misc/bike.jpg";
 
-let items = []
+let items = ["I_LRG", "I_SML", "Custom", "Waikato", "SD_LRG", "F&D_LRG", "F&D_SML"]
 
 export default function Test() {
+  const [searchText, setSearchText] = useState('')
+  const [results, setResults] = useState([])
+  let text = ''
 
-    const [itemList, setItemList] = useState([])
-    const [selectedImage, setSelectedImage] = useState(null)
+  function findResults() {
+    console.log(text)
+    if (text.length) {
+        setResults(items.filter((item) => {
+          return item.toLocaleLowerCase().includes(text.toLowerCase())
+        }))
+    } else {setResults([])}
+    setSearchText(text)
+  }
 
+
+
+return (
+  <>
+    <div style={{height: '200px', width: '300px', background: 'black', padding: '30px'}}>
+      <Forms.Search value={searchText} text={setSearchText} clear={setResults} onChange={(e) => {text = e.target.value; findResults();}} results={results}>Template</Forms.Search>
+    </div>
+  </>
+)
+
+// return(<>
+//   <div style={{height: '200px', width: '300px', background: 'black', padding: '30px'}}>
+//   <Inputs.Col style={{background: 'black'}}>
+//     <Inputs.InputBox>
+//     <Inputs.Input value={searchText} onChange={(e) => {text = e.target.value; findResults();}} />
+      
+//       <Inputs.Text>Template</Inputs.Text>
+//                     <Inputs.Line></Inputs.Line>
+        
+
+//     </Inputs.InputBox>
+//     <Inputs.List>
+//     {/* <ul style={{background: 'white', borderRadius: '2px', listStyleType: 'none', padding: '0'}}> */}
+//     {results.length > 0 ? results.map(res => (
+//       <Inputs.ListItem key={res} onClick={(e) => {setSearchText(res); setResults([])}}>{res}</Inputs.ListItem>
+      
+//     )) : ''}
+//   {/* </ul> */}
+//   </Inputs.List>
+//   </Inputs.Col>
     
-
-    function addItem(num) {
-        items.push(num)
-        setItemList(items)
-    }
-
-    function removeItem(num) {
-        for (let i = 0; i < items.length; i++) {
-            if (items[i] === num) {
-                items.splice(i,1)
-            }
-            setItemList(items)
-        }
-    }
-
-    return(<>
-             <h1>Upload and Display Image usign React Hook's</h1>
-      {selectedImage && (
-        <div>
-        <img alt="not fount" width={"250px"} src={URL.createObjectURL(selectedImage)} />
-        <br />
-        <button onClick={()=>setSelectedImage(null)}>Remove</button>
-        </div>
-      )}
-      <br />
+//   </div>
+//   </>
+//     )
+}
+    // return(<>
+    //          <h1>Upload and Display Image usign React Hook's</h1>
+    //   {selectedImage && (
+    //     <div>
+    //     <img alt="not fount" width={"250px"} src={URL.createObjectURL(selectedImage)} />
+    //     <br />
+    //     <button onClick={()=>setSelectedImage(null)}>Remove</button>
+    //     </div>
+    //   )}
+    //   <br />
      
-      <br /> 
-      <input
-        type="file"
-        name="myImage"
-        onChange={(event) => {
-          console.log(event.target.files[0]);
-          setSelectedImage(event.target.files[0]);
-        }}
-      />
-        </>
+    //   <br /> 
+    //   <input
+    //     type="file"
+    //     id="file"
+    //     style={{opacity: '0', width: '0.1px', height: '0.1px', position: 'absolute'}}
+    //     // value={'Click Me'}
+    //     onChange={(event) => {
+    //       console.log(event.target.files[0]);
+    //       setSelectedImage(event.target.files[0]);
+    //     }}
+    //   />
+    //   <label for='file' style={{position: 'relative'}}>Upload</label>
+    //     </>
 
-    )}
+    // )}
     // <>
     //         <Flip.Wrapper>
     //         <Flip.Check/>

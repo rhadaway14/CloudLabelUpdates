@@ -212,4 +212,23 @@ export const Label = styled.label`
     color: white;
 `;
 
+export const List = styled.ul`
+    background: white;
+    border-radius: 2px;
+    list-style-type: none;
+    padding: 0;
+    transition: 0.5s;
+    
+`;
 
+export const ListItem = styled.li`
+    color: #000;
+    border-radius: 2px;
+    border: solid white 2px;
+    transition: 0.5s;
+
+    &:hover {
+        background: #000;
+        color: white;
+    }
+`;

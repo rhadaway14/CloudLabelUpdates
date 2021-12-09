@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from '../forms/styles/forms';
 
 import { Container, Title, Row, Col, InputBox, Input,
-    Text, Line, TextArea, Submit, InputBoxTextArea, Wrap, Label, Read, ReadTextArea} from './styles/inputs';
+    Text, Line, TextArea, Submit, InputBoxTextArea, Wrap, Label, Read, ReadTextArea, List, ListItem} from './styles/inputs';
 
 
 export default function Inputs({ children, ...restProps }) {
@@ -31,6 +31,14 @@ Inputs.InputBoxTextArea = function InputsInputTextArea({children, ...restProps})
 
 Inputs.Input = function InputsInput({value, onChange, children, ...restProps}) {
     return <Input value={value} type={"text"} name={""} onChange={onChange} required={"required"} {...restProps}/>
+}
+
+Inputs.List = function InputsList({children, ...restProps}) {
+    return <List {...restProps}>{children}</List>
+}
+
+Inputs.ListItem = function InputsListItem({children, key, onClick, ...restProps}) {
+    return <ListItem key={key} onClick={onClick} {...restProps}>{children}</ListItem>
 }
 
 Inputs.Read = function InputsRead({value, onChange, children, ...restProps}) {

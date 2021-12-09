@@ -1,3 +1,4 @@
+import { ThemeProvider } from "styled-components";
 import Inputs from "../components/inputs";
 
 export default function Forms({ children, ...restProps }) {
@@ -12,6 +13,24 @@ Forms.Text = function FormsText({value, onChange, children, ...restProps}) {
                     <Inputs.Text>{children}</Inputs.Text>
                     <Inputs.Line></Inputs.Line>
                 </Inputs.InputBox>
+            </Inputs.Col>
+            </>
+    }
+
+Forms.Search = function FormsSearch({value, onChange, results, text, clear, temp, children, ...restProps}) {
+    return <>
+            <Inputs.Col>
+                <Inputs.InputBox>
+                    <Inputs.Input value={value} onChange={onChange} {...restProps}/>
+                    <Inputs.Text>{children}</Inputs.Text>
+                    <Inputs.Line></Inputs.Line>
+                </Inputs.InputBox>
+                <Inputs.List>
+                    {results.length > 0 ? results.map(res => (
+                    <Inputs.ListItem key={res} 
+                    onClick={(e) => {text(res); clear([]); temp(res)}}>{res}</Inputs.ListItem>
+                    )) : ''}
+                </Inputs.List>
             </Inputs.Col>
             </>
     }

@@ -3,13 +3,30 @@ import Inputs from "../components/inputs";
 import Forms from "../containers/forms";
 import Locations from "./locations";
 import Links from "./links";
+import React, {useState} from 'react';
 
+let items = ["I_LRG", "I_SML", "Custom", "Waikato", "SD_LRG", "F&D_LRG", "F&D_SML"]
 export default function Entries({children, ...restProps}) {
     return <></>
 }
 
-Entries.Write = function EntriesWrite({ dname, cbar, cont, desc, comp, addr, phon, ccn, inst, faci, onClick, form, children, ...restProps}) {
+Entries.Write = function EntriesWrite({ dname, cbar, cont, desc, comp, addr, phon, ccn, inst, faci, onClick, form, children, template, file, image, ...restProps}) {
+    const [searchText, setSearchText] = useState('')
+    const [results, setResults] = useState([])
+    let text = ''
+  
+    function findResults() {
+      if (text.length) {
+          setResults(items.filter((item) => {
+            return item.toLocaleLowerCase().includes(text.toLowerCase())
+          }))
+      } else {setResults([])}
+      setSearchText(text)
+      console.log(text)
+    }
+
     return(
+        
         <>
         <Inputs.Wrapper>
         <Inputs>
@@ -28,11 +45,15 @@ Entries.Write = function EntriesWrite({ dname, cbar, cont, desc, comp, addr, pho
             </Inputs.Row>
             <Inputs.Row>
                 <Forms.TextArea onChange={(e) => {inst(e.target.value);}}>Usage Instructions</Forms.TextArea>
+                <Forms.Search results={results} value={searchText} clear={setResults} text={setSearchText} temp={template} onChange={(e) => { text = e.target.value; template(text); findResults(); }}>Template</Forms.Search>
             </Inputs.Row>
             <Inputs.Row>
                 <Inputs.Col>
                 {form !== 'Read' &&
-                    <Links.Button onClick={onClick}>{form}</Links.Button>}
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <Links.Button onClick={onClick}>{form}</Links.Button>
+                    <Links.File image={image} file={file}></Links.File>
+                </div>}
                 </Inputs.Col>
             </Inputs.Row>
             
@@ -46,7 +67,8 @@ Entries.Write = function EntriesWrite({ dname, cbar, cont, desc, comp, addr, pho
     )
 };
 
-Entries.Read = function EntriesRead({ faci, readonly, form, children, ...restProps}) {
+Entries.Read = function EntriesRead({ faci, readonly, children, ...restProps}) {
+    console.log(readonly)
     return(
         <>
         <Inputs.Wrapper>
@@ -66,14 +88,16 @@ Entries.Read = function EntriesRead({ faci, readonly, form, children, ...restPro
             </Inputs.Row>
             <Inputs.Row>
                 <Forms.ReadTextArea style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['UsageIndstructions']}>Usage Instructions</Forms.ReadTextArea>
+                <Forms.ReadText style={{cursor: 'default'}} value={readonly['Template']}>Template</Forms.ReadText>
             </Inputs.Row>
-            {/* <Inputs.Row>
+            <Inputs.Row>
                 <Inputs.Col>
-                
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <Links.ReadFile style={{cursor: 'default'}} file={readonly['Logo']}></Links.ReadFile>
+                    </div>
                 </Inputs.Col>
-            </Inputs.Row> */}
+            </Inputs.Row>
 
-            
             
         </Inputs>
         <Locations.Display readonly={readonly} faci={faci}></Locations.Display>
@@ -106,6 +130,7 @@ Entries.Update = function EntriesUpdate({ dname, cbar, cont, desc, comp, addr, p
             </Inputs.Row>
             <Inputs.Row>
                 <Forms.TextArea onChange={(e) => {inst(e.target.value)}} defaultValue={readonly['ListAttributes'][0]['CustomAttributes']['UsageIndstructions']}>Usage Instructions</Forms.TextArea>
+                <Forms.Text onChange={(e) => {ccn(e.target.value)}}  defaultValue={readonly['ListAttributes'][0]['Template']}>Template</Forms.Text>
             </Inputs.Row>
 
             <Inputs.Row>
@@ -144,6 +169,7 @@ Entries.Delete = function EntriesRead({ onClick, faci, readonly, form, children,
             </Inputs.Row>
             <Inputs.Row>
                 <Forms.ReadTextArea style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['UsageIndstructions']}>Usage Instructions</Forms.ReadTextArea>
+                <Forms.ReadText style={{cursor: 'default'}} style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['Template']}>Template</Forms.ReadText>
             </Inputs.Row>
             <Inputs.Row>
                 <Inputs.Col>

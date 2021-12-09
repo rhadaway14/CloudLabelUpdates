@@ -36,8 +36,10 @@ export default function Main() {
     const [instructions, setInstructions] = useState('')
     const isMounted = useRef(false);
     const isClicked = useRef(false);
+    const [selectedImage, setSelectedImage] = useState(null)
+    const [template, setTemplate] = useState('')
 
-    let fullStyle = {marginRight: '0px', height: '85vh', width: '70vw'}
+    let fullStyle = {marginRight: '0px', height: '90vh', width: '70vw', transition: '2s'}
     
     function facilitiesData(data) {
         if (data['Item'] !== '') {
@@ -131,13 +133,25 @@ export default function Main() {
     }
 
     function createData() {
+        let logo
         if (!isClicked.current){
         console.log(isMounted.current)
         if(isMounted.current) {
         const header = new Headers()
-        header.append('Content-type','application/json')
         // header.append('Access-Control-Allow-Origin', 'http://dockerhost:3001')
         header.append('Access-Control-Allow-Origin', 'http://localhost:3001')
+        header.append('Enctype', "multipart/form-data")
+        console.log(selectedImage)
+        if (selectedImage !== null) {
+            logo = selectedImage[0]['name']
+        let data = new FormData();
+        data.append('files', selectedImage[0])
+
+        fetch('http://localhost:5015/CreateFile', {
+            method: "POST",
+            body: data,
+            headers: header
+        })} else { logo = ''}
 
         let listAttributes = []
         for (let i = 0; i < facilities.length; i++) {
@@ -154,24 +168,34 @@ export default function Main() {
                  "ColorBar": colorBar,
                  "CustomContains": contains
                 },
-                "Printer": "PrinterNo2",
-                "Template": "TemplateNo2"
+                "Printer": "PrinterNo2"
+                
             }
                 )
         }
-        
+
         let jbody = JSON.stringify(
             {
             "Item": itemNo,
-            "ListAttributes": listAttributes
+            "ListAttributes": listAttributes,
+            "Template": template,
+            "Logo": logo
            });
+        console.log(jbody)
 
-        // fetch('http://dockerhost:5010/ST/Submit/OP', {
+
+
+        const header2 = new Headers;
+            header.append('Content-type','application/json');
+            // header.append('Access-Control-Allow-Origin', 'http://dockerhost:3001')
+            header.append('Access-Control-Allow-Origin', 'http://localhost:3001')
+
         fetch('http://localhost:5015/Create', {
             method: "POST",
             body: jbody,
             headers: header
         })
+
         .then(() => {
         isMounted.current = false;
         setForm('');
@@ -336,7 +360,7 @@ export default function Main() {
                                         Create
                                     </Features.Statement>
                                     {form === 'Create' &&
-                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false)}} onKeyDown={(e) => keyDown(e,'Create')}/>}
+                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false); setSelectedImage(null)}} onKeyDown={(e) => keyDown(e,'Create')}/>}
                                 </div>
                                 { form === 'Create' && data['Item'] !== ''&&
                                 <div style={{textAlign: 'center', padding: '25vh 5px'}}>
@@ -346,12 +370,13 @@ export default function Main() {
                                 </div>}
 
                                 {entry && data["Item"] === '' && itemNo !== ''&&
+                                
                                 <Entries.Write faci={faci} form={form} dname={setDisplayName} 
                                     cbar={setColorBar} cont={setContains} desc={setDescription} 
                                     comp={setCompany} addr={setAddress} phon={setPhone} ccn={setCcn} inst={setInstructions}
-                                    onClick={() => createData()}>{itemNo}</Entries.Write>}
+                                    onClick={() => createData()} image={setSelectedImage} template={setTemplate} file={selectedImage}>{itemNo}</Entries.Write>}
                                 {/* <Entries.Write faci={setFaciList} form={form} onClick={() => createData()}>{itemNo}</Entries.Write>} */}
-                                {/* // <Locations></Locations>} */}
+                                
                                 {form === 'Create' &&
                                 <div>
                                     <Buttons.Round onClick={(e) => buttonClick(e)}>x</Buttons.Round>
