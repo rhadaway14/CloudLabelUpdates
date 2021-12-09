@@ -109,8 +109,23 @@ Entries.Read = function EntriesRead({ faci, readonly, children, ...restProps}) {
     )
 };
 
-Entries.Update = function EntriesUpdate({ dname, cbar, cont, desc, comp, addr, phon, ccn, inst, faci, readonly, onClick, form, children, ...restProps}) {
+Entries.Update = function EntriesUpdate({ dname, cbar, cont, desc, comp, addr, phon, ccn, inst, image, file, faci, readonly, onClick, template, form, children, ...restProps}) {
     
+    const [searchText, setSearchText] = useState(readonly['Template'])
+    const [results, setResults] = useState([])
+    let text = ''
+    console.log(readonly)
+
+    function findResults() {
+        if (text.length) {
+            setResults(items.filter((item) => {
+              return item.toLocaleLowerCase().includes(text.toLowerCase())
+            }))
+        } else {setResults([])}
+        setSearchText(text)
+        console.log(text)
+      }
+
     return(
         <>
         <Inputs.Wrapper>
@@ -130,13 +145,17 @@ Entries.Update = function EntriesUpdate({ dname, cbar, cont, desc, comp, addr, p
             </Inputs.Row>
             <Inputs.Row>
                 <Forms.TextArea onChange={(e) => {inst(e.target.value)}} defaultValue={readonly['ListAttributes'][0]['CustomAttributes']['UsageIndstructions']}>Usage Instructions</Forms.TextArea>
-                <Forms.Text onChange={(e) => {ccn(e.target.value)}}  defaultValue={readonly['ListAttributes'][0]['Template']}>Template</Forms.Text>
+                <Forms.Search results={results} value={searchText} clear={setResults} text={setSearchText} temp={template} onChange={(e) => { text = e.target.value; template(text); findResults(); }}>Template</Forms.Search>
             </Inputs.Row>
 
             <Inputs.Row>
                 <Inputs.Col>
                 {form !== 'Read' &&
-                    <Links.Button onClick={onClick}>{form}</Links.Button>}
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <Links.Button onClick={onClick}>{form}</Links.Button>
+                    <Links.File image={image} file={file}></Links.File>
+                    {/* <Links.ReadFile style={{cursor: 'default'}} file={readonly['Logo']}></Links.ReadFile> */}
+                </div>}
                 </Inputs.Col>
             </Inputs.Row>
 
@@ -169,12 +188,13 @@ Entries.Delete = function EntriesRead({ onClick, faci, readonly, form, children,
             </Inputs.Row>
             <Inputs.Row>
                 <Forms.ReadTextArea style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['CustomAttributes']['UsageIndstructions']}>Usage Instructions</Forms.ReadTextArea>
-                <Forms.ReadText style={{cursor: 'default'}} style={{cursor: 'default'}} value={readonly['ListAttributes'][0]['Template']}>Template</Forms.ReadText>
+                <Forms.ReadText style={{cursor: 'default'}} value={readonly['Template']}>Template</Forms.ReadText>
             </Inputs.Row>
             <Inputs.Row>
                 <Inputs.Col>
                 {form !== 'Read' &&
                     <Links.Button onClick={onClick}>{form}</Links.Button>}
+                    <Links.ReadFile style={{cursor: 'default'}} file={readonly['Logo']}></Links.ReadFile>
                 </Inputs.Col>
             </Inputs.Row>
 

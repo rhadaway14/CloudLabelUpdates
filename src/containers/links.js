@@ -50,7 +50,7 @@ Links.File = function LinksFile({ image, file, children, ...restProps}){
 }
 
 Links.ReadFile = function LinksReadFile({ file, children, ...restProps}){
-    let image
+    let image = ''
     function getImage() {
         console.log('hello')
         console.log(file)
@@ -63,6 +63,7 @@ Links.ReadFile = function LinksReadFile({ file, children, ...restProps}){
     // image = getImage()
     
     return  <>
+    {image !== '' &&
     <BTest.Anchor>
         <BTest.Span>
         <input
@@ -72,8 +73,8 @@ Links.ReadFile = function LinksReadFile({ file, children, ...restProps}){
             disabled/>
             <label for='file' style={{color: 'white',  position: 'relative'}}>{file === null ? '': file}</label>
         </BTest.Span>
-    </BTest.Anchor>
-    { file !== null &&
+    </BTest.Anchor>}
+    { file !== '' &&
     <img alt="not found" height={'75px'} width={'150px'} style={{margin: '0px 15px', objectFit: 'contain'}} 
     src={`http://localhost:5015/ReadFile/${file}`} />}
     </>

@@ -39,7 +39,7 @@ export default function Main() {
     const [selectedImage, setSelectedImage] = useState(null)
     const [template, setTemplate] = useState('')
 
-    let fullStyle = {marginRight: '0px', height: '90vh', width: '70vw', transition: '2s'}
+    let fullStyle = {marginRight: '0px', height: '90vh', width: '70vw'}
     
     function facilitiesData(data) {
         if (data['Item'] !== '') {
@@ -213,6 +213,7 @@ export default function Main() {
     };
 
     function updateData() {
+        let logo
         console.log("update")
         if (!isClicked.current){
         console.log(isMounted.current)
@@ -221,6 +222,17 @@ export default function Main() {
         header.append('Content-type','application/json')
         // header.append('Access-Control-Allow-Origin', 'http://dockerhost:3001')
         header.append('Access-Control-Allow-Origin', 'http://localhost:3001')
+        console.log(selectedImage)
+        if (selectedImage !== null) {
+            logo = selectedImage[0]['name']
+        let data = new FormData();
+        data.append('files', selectedImage[0])
+
+        fetch('http://localhost:5015/CreateFile', {
+            method: "POST",
+            body: data,
+            headers: header
+        })} else { logo = ''}
 
         let listAttributes = []
         for (let i = 0; i < facilities.length; i++) {
@@ -237,8 +249,7 @@ export default function Main() {
                  "ColorBar": colorBar,
                  "CustomContains": contains
                 },
-                "Printer": "PrinterNo2",
-                "Template": "TemplateNo2"
+                "Printer": "PrinterNo2"
             }
                 )
         }
@@ -246,7 +257,9 @@ export default function Main() {
         let jbody = JSON.stringify(
             {
             "Item": itemNo,
-            "ListAttributes": listAttributes
+            "ListAttributes": listAttributes,
+            "Template": template,
+            "Logo": logo
            });
 
         // fetch('http://dockerhost:5010/ST/Submit/OP', {
@@ -436,6 +449,7 @@ export default function Main() {
                                 <Entries.Update faci={faci} form={form} dname={setDisplayName} 
                                 cbar={setColorBar} cont={setContains} desc={setDescription} 
                                 comp={setCompany} addr={setAddress} phon={setPhone} ccn={setCcn} inst={setInstructions}
+                                image={setSelectedImage} template={setTemplate} file={selectedImage}
                                 onClick={() => updateData()} readonly={data}>{itemNo}</Entries.Update>}
                                 {form === 'Update' &&
                                 <div>
