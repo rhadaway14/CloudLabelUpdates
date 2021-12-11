@@ -126,6 +126,7 @@ Entries.Update = function EntriesUpdate({ dname, cbar, cont, desc, comp, addr, p
         console.log(text)
       }
 
+    image(readonly['Logo'])
     return(
         <>
         <Inputs.Wrapper>
@@ -154,7 +155,6 @@ Entries.Update = function EntriesUpdate({ dname, cbar, cont, desc, comp, addr, p
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <Links.Button onClick={onClick}>{form}</Links.Button>
                     <Links.File image={image} file={file}></Links.File>
-                    {/* <Links.ReadFile style={{cursor: 'default'}} file={readonly['Logo']}></Links.ReadFile> */}
                 </div>}
                 </Inputs.Col>
             </Inputs.Row>
@@ -193,8 +193,10 @@ Entries.Delete = function EntriesRead({ onClick, faci, readonly, form, children,
             <Inputs.Row>
                 <Inputs.Col>
                 {form !== 'Read' &&
-                    <Links.Button onClick={onClick}>{form}</Links.Button>}
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <Links.Button onClick={onClick}>{form}</Links.Button>
                     <Links.ReadFile style={{cursor: 'default'}} file={readonly['Logo']}></Links.ReadFile>
+                    </div>}
                 </Inputs.Col>
             </Inputs.Row>
 

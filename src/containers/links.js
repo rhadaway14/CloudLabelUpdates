@@ -30,40 +30,54 @@ Links.Search = function LinksSearch({ onClick ,children, ...restProps}){
 }
 
 Links.File = function LinksFile({ image, file, children, ...restProps}){
+    console.log(file)
     return  <>
     <BTest.Anchor>
         <BTest.Span>
         <input
             type="file"
             id="file"
+            name="file"
             style={{opacity: '0', width: '0.1px', height: '0.1px', position: 'absolute'}}
             onChange={(event) => {
-            image(event.target.files);
+            if (event.target.files !== ''){
+            image(event.target.files);}
             }}
             />
+            {console.log('File')}
+            {console.log(file)}
             <label for='file' style={{color: 'white',  position: 'relative'}}>{file === null ? 'Select Image': file[0]['name']}</label>
         </BTest.Span>
     </BTest.Anchor>
     { file !== null &&
-    <img alt="not found" height={'75px'} width={'150px'} style={{objectFit: 'contain'}} src={URL.createObjectURL(file[0])} />}
+    <>
+    <img alt="not found" height={'75px'} width={'150px'} style={{objectFit: 'contain'}} src={URL.createObjectURL(file[0])} />
+    <BTest.Anchor>
+        <BTest.Span>
+            <label style={{color: 'white',  position: 'relative'}} onClick={() => {
+            image(null);
+            }}>Remove Image</label>
+        </BTest.Span>
+    </BTest.Anchor>
+    </>}
     </>
 }
 
 Links.ReadFile = function LinksReadFile({ file, children, ...restProps}){
-    let image = ''
-    function getImage() {
-        console.log('hello')
-        console.log(file)
-        let url = `http://localhost:5015/ReadFile/${file}`
-        console.log(url)
-        image = fetch(url)
-        console.log(image)
-        return image
-    }
+    // let image = ''
+    // function getImage() {
+    //     console.log('hello')
+    //     console.log(file)
+    //     let url = `http://localhost:5015/ReadFile/${file}`
+    //     console.log(url)
+    //     image = fetch(url)
+    //     console.log(image)
+    //     return image
+    // }
     // image = getImage()
-    
+    console.log(file)
     return  <>
-    {image !== '' &&
+    {file !== '' &&
     <BTest.Anchor>
         <BTest.Span>
         <input
