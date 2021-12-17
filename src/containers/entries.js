@@ -5,7 +5,8 @@ import Locations from "./locations";
 import Links from "./links";
 import React, {useState} from 'react';
 
-let items = ["I_LRG", "I_SML", "Custom", "Waikato", "SD_LRG", "F&D_LRG", "F&D_SML"]
+let temps = ["I_LRG", "I_SML", "Custom", "Waikato", "SD_LRG", "F&D_LRG", "F&D_SML"]
+let imageLogo = ['Leedstone_Logo.jpg', "becco.png", "hatTrick.jpg"]
 export default function Entries({children, ...restProps}) {
     return <></>
 }
@@ -13,17 +14,34 @@ export default function Entries({children, ...restProps}) {
 Entries.Write = function EntriesWrite({ dname, cbar, cont, desc, comp, addr, phon, ccn, inst, faci, onClick, form, children, template, file, image, ...restProps}) {
     const [searchText, setSearchText] = useState('')
     const [results, setResults] = useState([])
+
+    const [searchLogo, setSearchLogo] = useState('')
+    const [logoResult, setLogoResult] = useState([])
+    
     let text = ''
-  
-    function findResults() {
-      if (text.length) {
-          setResults(items.filter((item) => {
-            return item.toLocaleLowerCase().includes(text.toLowerCase())
-          }))
-      } else {setResults([])}
-      setSearchText(text)
-      console.log(text)
-    }
+    let logoText = ''
+
+
+    function findResults(itemList) {
+        if (text.length) {
+            setResults(itemList.filter((item) => {
+              return item.toLocaleLowerCase().includes(text.toLowerCase())
+            }))
+        } else {setResults([])}
+        setSearchText(text)
+        console.log(text)
+      }
+
+
+      function findLogo(itemList) {
+        if (text.length) {
+            setLogoResult(itemList.filter((item) => {
+              return item.toLocaleLowerCase().includes(text.toLowerCase())
+            }))
+        } else {setLogoResult([])}
+        setSearchLogo(text)
+        console.log(text)
+      }
 
     return(
         
@@ -45,30 +63,34 @@ Entries.Write = function EntriesWrite({ dname, cbar, cont, desc, comp, addr, pho
             </Inputs.Row>
             <Inputs.Row>
                 <Forms.TextArea onChange={(e) => {inst(e.target.value);}}>Usage Instructions</Forms.TextArea>
-                <Forms.Search results={results} value={searchText} clear={setResults} text={setSearchText} temp={template} onChange={(e) => { text = e.target.value; template(text); findResults(); }}>Template</Forms.Search>
+                <Forms.Search results={results} value={searchText} clear={setResults} text={setSearchText} image={image} temp={template} onChange={(e) => { text = e.target.value; template(text); findResults(temps); }}>Template</Forms.Search>
             </Inputs.Row>
+
             <Inputs.Row>
                 <Inputs.Col>
                 {form !== 'Read' &&
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <Links.Button onClick={onClick}>{form}</Links.Button>
-                    <Links.File image={image} file={file}></Links.File>
                 </div>}
                 </Inputs.Col>
             </Inputs.Row>
             
         </Inputs>
+        <Inputs.Col>
         <Locations faci={faci}></Locations>
+        {image(searchLogo)}
+        {console.log(file)}
+        <Forms.Search style={{fontSize: '16px'}} results={logoResult} value={searchLogo} clear={setLogoResult} text={setSearchLogo} temp={image} onChange={(e) => { text = e.target.value; findLogo(imageLogo); }}>Logo Image</Forms.Search>
+        <Links.ReadFile style={{cursor: 'default'}} file={searchLogo}></Links.ReadFile>
+        </Inputs.Col>
         </Inputs.Wrapper>
 
-        
         </>
-
     )
 };
 
 Entries.Read = function EntriesRead({ faci, readonly, children, ...restProps}) {
-    console.log(readonly)
+    // console.log(readonly)
     return(
         <>
         <Inputs.Wrapper>
@@ -93,14 +115,17 @@ Entries.Read = function EntriesRead({ faci, readonly, children, ...restProps}) {
             <Inputs.Row>
                 <Inputs.Col>
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                    <Links.ReadFile style={{cursor: 'default'}} file={readonly['Logo']}></Links.ReadFile>
+                    
                     </div>
                 </Inputs.Col>
             </Inputs.Row>
 
             
         </Inputs>
+        <Inputs.Col>
         <Locations.Display readonly={readonly} faci={faci}></Locations.Display>
+        <Links.ReadFile style={{cursor: 'default'}} file={readonly['Logo']}></Links.ReadFile>
+        </Inputs.Col>
         </Inputs.Wrapper>
 
         
@@ -113,16 +138,30 @@ Entries.Update = function EntriesUpdate({ dname, cbar, cont, desc, comp, addr, p
     
     const [searchText, setSearchText] = useState(readonly['Template'])
     const [results, setResults] = useState([])
-    let text = ''
-    console.log(readonly)
+    const [searchLogo, setSearchLogo] = useState(readonly['Logo'])
+    const [logoResult, setLogoResult] = useState([])
 
-    function findResults() {
+    let text = ''
+
+      
+    function findResults(itemList) {
         if (text.length) {
-            setResults(items.filter((item) => {
+            setResults(itemList.filter((item) => {
               return item.toLocaleLowerCase().includes(text.toLowerCase())
             }))
         } else {setResults([])}
         setSearchText(text)
+        console.log(text)
+      }
+
+
+      function findLogo(itemList) {
+        if (text.length) {
+            setLogoResult(itemList.filter((item) => {
+              return item.toLocaleLowerCase().includes(text.toLowerCase())
+            }))
+        } else {setLogoResult([])}
+        setSearchLogo(text)
         console.log(text)
       }
 
@@ -146,7 +185,8 @@ Entries.Update = function EntriesUpdate({ dname, cbar, cont, desc, comp, addr, p
             </Inputs.Row>
             <Inputs.Row>
                 <Forms.TextArea onChange={(e) => {inst(e.target.value)}} defaultValue={readonly['ListAttributes'][0]['CustomAttributes']['UsageIndstructions']}>Usage Instructions</Forms.TextArea>
-                <Forms.Search results={results} value={searchText} clear={setResults} text={setSearchText} temp={template} onChange={(e) => { text = e.target.value; template(text); findResults(); }}>Template</Forms.Search>
+                <Forms.Search results={results} value={searchText} clear={setResults} text={setSearchText} temp={template} onChange={(e) => { text = e.target.value; template(text); findResults(temps); }}>Template</Forms.Search>
+                {/* <Forms.Search results={results} value={searchText} clear={setResults} text={setSearchText} temp={template} onChange={(e) => { text = e.target.value; template(text); findResults(imageLogo); }}>Logo Image</Forms.Search> */}
             </Inputs.Row>
 
             <Inputs.Row>
@@ -154,17 +194,21 @@ Entries.Update = function EntriesUpdate({ dname, cbar, cont, desc, comp, addr, p
                 {form !== 'Read' &&
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <Links.Button onClick={onClick}>{form}</Links.Button>
-                    <Links.File image={image} file={file}></Links.File>
                 </div>}
                 </Inputs.Col>
             </Inputs.Row>
 
         </Inputs>
+        <Inputs.Col>
         <Locations.Update readonly={readonly} faci={faci}></Locations.Update>
+        {image(searchLogo)}
+        {console.log(file)}
+        <Forms.Search style={{fontSize: '16px'}} results={logoResult} value={searchLogo} clear={setLogoResult} text={setSearchLogo} temp={image} onChange={(e) => { text = e.target.value; findLogo(imageLogo); }}>Logo Image</Forms.Search>
+        <Links.ReadFile style={{cursor: 'default'}} file={searchLogo}></Links.ReadFile>
+        </Inputs.Col>
         </Inputs.Wrapper>
 
         </>
-
     )
 };
 
@@ -195,14 +239,16 @@ Entries.Delete = function EntriesRead({ onClick, faci, readonly, form, children,
                 {form !== 'Read' &&
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <Links.Button onClick={onClick}>{form}</Links.Button>
-                    <Links.ReadFile style={{cursor: 'default'}} file={readonly['Logo']}></Links.ReadFile>
+                    
                     </div>}
                 </Inputs.Col>
             </Inputs.Row>
 
         </Inputs>
+        <Inputs.Col>
         <Locations.Update readonly={readonly} faci={faci}></Locations.Update>
-
+        <Links.ReadFile style={{cursor: 'default'}} file={readonly['Logo']}></Links.ReadFile>
+        </Inputs.Col>
         </Inputs.Wrapper>
 
         

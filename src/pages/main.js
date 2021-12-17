@@ -143,15 +143,16 @@ export default function Main() {
         header.append('Enctype', "multipart/form-data")
         console.log(selectedImage)
         if (selectedImage !== null) {
-            logo = selectedImage[0]['name']
-        let data = new FormData();
-        data.append('files', selectedImage[0])
+            logo = selectedImage
+        // let data = new FormData();
+        // data.append('files', selectedImage[0])
 
-        fetch('http://localhost:5015/CreateFile', {
-            method: "POST",
-            body: data,
-            headers: header
-        })} else { logo = ''}
+        // fetch('http://localhost:5015/CreateFile', {
+        //     method: "POST",
+        //     body: data,
+        //     headers: header
+        // })
+        } else { logo = ''}
 
         let listAttributes = []
         for (let i = 0; i < facilities.length; i++) {
@@ -224,15 +225,16 @@ export default function Main() {
         header.append('Access-Control-Allow-Origin', 'http://localhost:3001')
         console.log(selectedImage)
         if (selectedImage !== null) {
-            logo = selectedImage[0]['name']
-        let data = new FormData();
-        data.append('files', selectedImage[0])
+            logo = selectedImage
+        // let data = new FormData();
+        // data.append('files', selectedImage)
 
-        fetch('http://localhost:5015/CreateFile', {
-            method: "POST",
-            body: data,
-            headers: header
-        })} else { logo = ''}
+        // fetch('http://localhost:5015/CreateFile', {
+        //     method: "POST",
+        //     body: data,
+        //     headers: header
+        // })
+    } else { logo = ''}
 
         let listAttributes = []
         for (let i = 0; i < facilities.length; i++) {
@@ -262,7 +264,7 @@ export default function Main() {
             "Logo": logo
            });
 
-        // fetch('http://dockerhost:5010/ST/Submit/OP', {
+
         fetch('http://localhost:5015/Update', {
             method: "POST",
             body: jbody,
@@ -273,6 +275,7 @@ export default function Main() {
         setForm('');
         setData({"Item": ''})
         setItemNo('');
+        console.log(itemNo)
         })
         .then(() => {  
         setDirections('Choose an action to get started.');
@@ -282,7 +285,6 @@ export default function Main() {
         .then(isClicked.current = true)
     }
     }
-    
     };
 
     function deleteData() {
@@ -356,7 +358,7 @@ export default function Main() {
         <>
             <div style={{overflow: 'hidden'}}>
                 
-                <div style={{display: 'flex', justifyContent: 'space-between', minWidth: '800px'}}>
+                <div style={{display: 'flex', justifyContent: 'start', minWidth: '800px'}}>
                     <div style={{marginLeft: '30px', borderRight: '2px solid black', width: '300px', padding: ' 0px 40px',
                      position: '-webkit-sticky', top: '70px',left: '0', margin: '40px 0px', height: '600px' }}>
                         <Background.TitleTop>CloudLabel</Background.TitleTop>
@@ -387,8 +389,7 @@ export default function Main() {
                                 <Entries.Write faci={faci} form={form} dname={setDisplayName} 
                                     cbar={setColorBar} cont={setContains} desc={setDescription} 
                                     comp={setCompany} addr={setAddress} phon={setPhone} ccn={setCcn} inst={setInstructions}
-                                    onClick={() => createData()} image={setSelectedImage} template={setTemplate} file={selectedImage}>{itemNo}</Entries.Write>}
-                                {/* <Entries.Write faci={setFaciList} form={form} onClick={() => createData()}>{itemNo}</Entries.Write>} */}
+                                    onClick={() => {createData()}} image={setSelectedImage} template={setTemplate} file={selectedImage}>{itemNo}</Entries.Write>}
                                 
                                 {form === 'Create' &&
                                 <div>

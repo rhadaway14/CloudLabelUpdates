@@ -52,7 +52,7 @@ export const Col = styled.div`
 
 export const InputBox = styled.div`
     position: relative;
-    width: 100%;
+    width: 75%;
     height: 40px;
     color: #fff;
 `;

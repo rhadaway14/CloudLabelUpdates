@@ -19,7 +19,7 @@ font-family: Inknut Antiqua, sans-serif;
 // left: 50%;
 // transform: translate(-50%, -50%);
 background: #fff;
-width: 200px;
+width: 150px;
 border: 1px solid rgba(0,0,0,0.5);
 border-radius: 15px;
 

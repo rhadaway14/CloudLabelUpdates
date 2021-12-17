@@ -17,18 +17,18 @@ Forms.Text = function FormsText({value, onChange, children, ...restProps}) {
             </>
     }
 
-Forms.Search = function FormsSearch({value, onChange, results, text, clear, temp, children, ...restProps}) {
+Forms.Search = function FormsSearch({value, onChange, results, text, clear, temp, image, children, ...restProps}) {
     return <>
             <Inputs.Col>
-                <Inputs.InputBox>
+                <Inputs.InputBox style={{width : '165px'}}>
                     <Inputs.Input value={value} onChange={onChange} {...restProps}/>
                     <Inputs.Text>{children}</Inputs.Text>
                     <Inputs.Line></Inputs.Line>
                 </Inputs.InputBox>
                 <Inputs.List>
-                    {results.length > 0 ? results.map(res => (
+                    {results != null ? results.map(res => (
                     <Inputs.ListItem key={res} 
-                    onClick={(e) => {text(res); clear([]); temp(res)}}>{res}</Inputs.ListItem>
+                    onClick={(e) => {temp(res); console.log(res); text(res); clear([]);}}>{res}</Inputs.ListItem>
                     )) : ''}
                 </Inputs.List>
             </Inputs.Col>
