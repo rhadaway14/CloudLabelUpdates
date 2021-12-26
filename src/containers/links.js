@@ -88,7 +88,9 @@ Links.ReadFile = function LinksReadFile({ file, children, ...restProps}){
             <label for='file' style={{color: 'white',  position: 'relative'}}>{file === null ? '': file}</label>
         </BTest.Span>
     </BTest.Anchor>} */}
-    { file !== '' &&
+    { file !== '' && typeof file === 'object' &&
+    <img alt="not found" height={'82.5px'} width={'165px'} style={{objectFit: 'contain', margin: '0px 15px'}} src={URL.createObjectURL(file[0])} />}
+    { file.length > 0 && typeof file !== 'object' &&
     <img alt="not found" height={'82.5px'} width={'165px'} style={{margin: '0px 15px', objectFit: 'contain'}} 
     src={`http://localhost:5015/ReadFile/${file}`} />}
     </>

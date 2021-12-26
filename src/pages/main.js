@@ -142,16 +142,18 @@ export default function Main() {
         header.append('Access-Control-Allow-Origin', 'http://localhost:3001')
         header.append('Enctype', "multipart/form-data")
         console.log(selectedImage)
-        if (selectedImage !== null) {
-            logo = selectedImage
-        // let data = new FormData();
-        // data.append('files', selectedImage[0])
+        if (selectedImage !== null && typeof selectedImage === 'object') {
+            logo = selectedImage[0]['name']
+        let data = new FormData();
+        data.append('files', selectedImage[0])
 
-        // fetch('http://localhost:5015/CreateFile', {
-        //     method: "POST",
-        //     body: data,
-        //     headers: header
-        // })
+        fetch('http://localhost:5015/CreateFile', {
+            method: "POST",
+            body: data,
+            headers: header
+        })
+        } else if (selectedImage !== null && selectedImage.length > 0) { 
+            logo = selectedImage
         } else { logo = ''}
 
         let listAttributes = []

@@ -31,13 +31,34 @@ export default function Test() {
 
 
 
-return (
-  <>
-    <div style={{height: '200px', width: '300px', background: 'black', padding: '30px'}}>
-      <Forms.Search value={searchText} text={setSearchText} clear={setResults} onChange={(e) => {text = e.target.value; findResults();}} results={results}>Template</Forms.Search>
-    </div>
-  </>
+return (<>
+<input
+      type="file"
+      id="file"
+      name="file"
+      style={{opacity: '0', width: '0.1px', height: '0.1px', position: 'absolute'}}
+      onChange={(event) => {
+      // if (event.target.files !== ''){
+      // temp(event.target.files);
+      // text('ADD NEW LOGO');}
+      console.log(event.target.files)
+      }}
+      />
+      <label for='file' style={{color: 'black',  position: 'relative'}}>ADD NEW LOGO</label>
+    </>
+
 )
+
+
+
+
+// return (
+//   <>
+//     <div style={{height: '200px', width: '300px', background: 'black', padding: '30px'}}>
+//       <Forms.Search value={searchText} text={setSearchText} clear={setResults} onChange={(e) => {text = e.target.value; findResults();}} results={results}>Template</Forms.Search>
+//     </div>
+//   </>
+// )
 
 // return(<>
 //   <div style={{height: '200px', width: '300px', background: 'black', padding: '30px'}}>

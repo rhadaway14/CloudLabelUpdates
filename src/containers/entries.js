@@ -63,7 +63,8 @@ Entries.Write = function EntriesWrite({ dname, cbar, cont, desc, comp, addr, pho
             </Inputs.Row>
             <Inputs.Row>
                 <Forms.TextArea onChange={(e) => {inst(e.target.value);}}>Usage Instructions</Forms.TextArea>
-                <Forms.Search results={results} value={searchText} clear={setResults} text={setSearchText} image={image} temp={template} onChange={(e) => { text = e.target.value; template(text); findResults(temps); }}>Template</Forms.Search>
+                <Forms.SearchTemp results={results} value={searchText} clear={setResults} text={setSearchText}
+                image={image} file={file} temp={template} onChange={(e) => { text = e.target.value; template(text); findResults(temps); }}>Template</Forms.SearchTemp>
             </Inputs.Row>
 
             <Inputs.Row>
@@ -82,6 +83,7 @@ Entries.Write = function EntriesWrite({ dname, cbar, cont, desc, comp, addr, pho
         {console.log(file)}
         <Forms.Search style={{fontSize: '16px'}} results={logoResult} value={searchLogo} clear={setLogoResult} text={setSearchLogo} temp={image} onChange={(e) => { text = e.target.value; findLogo(imageLogo); }}>Logo Image</Forms.Search>
         <Links.ReadFile style={{cursor: 'default'}} file={searchLogo}></Links.ReadFile>
+
         </Inputs.Col>
         </Inputs.Wrapper>
 
@@ -185,8 +187,9 @@ Entries.Update = function EntriesUpdate({ dname, cbar, cont, desc, comp, addr, p
             </Inputs.Row>
             <Inputs.Row>
                 <Forms.TextArea onChange={(e) => {inst(e.target.value)}} defaultValue={readonly['ListAttributes'][0]['CustomAttributes']['UsageIndstructions']}>Usage Instructions</Forms.TextArea>
-                <Forms.Search results={results} value={searchText} clear={setResults} text={setSearchText} temp={template} onChange={(e) => { text = e.target.value; template(text); findResults(temps); }}>Template</Forms.Search>
-                {/* <Forms.Search results={results} value={searchText} clear={setResults} text={setSearchText} temp={template} onChange={(e) => { text = e.target.value; template(text); findResults(imageLogo); }}>Logo Image</Forms.Search> */}
+                <Forms.SearchTemp readonly={readonly} results={results} value={searchText} clear={setResults} text={setSearchText}
+                temp={template} onChange={(e) => { text = e.target.value; template(text); findResults(temps); }}>Template</Forms.SearchTemp>
+                
             </Inputs.Row>
 
             <Inputs.Row>
