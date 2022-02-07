@@ -38,8 +38,11 @@ export default function Main() {
     const isClicked = useRef(false);
     const [selectedImage, setSelectedImage] = useState(null)
     const [template, setTemplate] = useState('')
+    const [logos, setLogos] = useState([]) 
 
     let fullStyle = {marginRight: '0px', height: '90vh', width: '70vw'}
+
+    
     
     function facilitiesData(data) {
         if (data['Item'] !== '') {
@@ -354,7 +357,13 @@ export default function Main() {
         console.log(facilities)
         }
         
-
+        function getLogoList(){
+            let url = 'http://localhost:5015/Logos'
+            fetch(url)
+                .then(res => res.json())
+                .then(json => setLogos(json["logos"]))
+            console.log(logos)
+        }
 
     return(
         <>
@@ -370,14 +379,14 @@ export default function Main() {
                     <Features>
                         
                         { (form === 'Create' || form === '') &&
-                        <Crud.Card onClick={() => cardSelect('Create')} style={cardStyle} src={create}>
+                        <Crud.Card onClick={() => {cardSelect('Create'); }}  style={cardStyle} src={create}>
                             <Features.Section>
                                 <div style={{padding: '20px'}}>
                                     <Features.Statement>
                                         Create
                                     </Features.Statement>
                                     {form === 'Create' &&
-                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false); setSelectedImage(null)}} onKeyDown={(e) => keyDown(e,'Create')}/>}
+                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false); setSelectedImage(null)}} onKeyDown={(e) => {keyDown(e,'Create'); getLogoList()}}/>}
                                 </div>
                                 { form === 'Create' && data['Item'] !== ''&&
                                 <div style={{textAlign: 'center', padding: '25vh 5px'}}>
@@ -387,9 +396,9 @@ export default function Main() {
                                 </div>}
 
                                 {entry && data["Item"] === '' && itemNo !== ''&&
-                                
+
                                 <Entries.Write faci={faci} form={form} dname={setDisplayName} 
-                                    cbar={setColorBar} cont={setContains} desc={setDescription} 
+                                    cbar={setColorBar} cont={setContains} desc={setDescription} logos={logos}
                                     comp={setCompany} addr={setAddress} phon={setPhone} ccn={setCcn} inst={setInstructions}
                                     onClick={() => {createData()}} image={setSelectedImage} template={setTemplate} file={selectedImage}>{itemNo}</Entries.Write>}
                                 
@@ -432,14 +441,14 @@ export default function Main() {
                         </Crud.Card>}
 
                         { (form === 'Update' || form === '') &&
-                        <Crud.Card onClick={() => cardSelect('Update')} style={cardStyle} src={update}>
+                        <Crud.Card onClick={() => {cardSelect('Update'); }} style={cardStyle} src={update}>
                             <Features.Section>
                                 <div style={{padding: '20px'}}>
                                     <Features.Statement>
                                         Update
                                     </Features.Statement>
                                     {form === 'Update' &&
-                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false)}} onKeyDown={(e) => keyDown(e, 'Update')}/>}
+                                        <Crud.Search value={itemNo} onChange={(e) => {setItemNo(e.target.value); setEntry(false)}} onKeyDown={(e) => {keyDown(e, 'Update'); getLogoList()}}/>}
                                 </div>
                                 { form === 'Update' && data['Item'] === '' && itemNo !== '' &&
                                 <div style={{textAlign: 'center', padding: '25vh 5px'}}>

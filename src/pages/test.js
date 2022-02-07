@@ -9,8 +9,10 @@ import Check from "../components/check";
 import Locations from "../containers/locations";
 import Entries from "../containers/entries";
 import Flip from "../components/flip";
+import Buttons from "../components/buttons";
 
 import img from "../images/misc/bike.jpg";
+import { Button } from "../components/forms/styles/forms";
 
 let items = ["I_LRG", "I_SML", "Custom", "Waikato", "SD_LRG", "F&D_LRG", "F&D_SML"]
 
@@ -19,34 +21,20 @@ export default function Test() {
   const [results, setResults] = useState([])
   let text = ''
 
-  function findResults() {
-    console.log(text)
-    if (text.length) {
-        setResults(items.filter((item) => {
-          return item.toLocaleLowerCase().includes(text.toLowerCase())
-        }))
-    } else {setResults([])}
-    setSearchText(text)
-  }
+ 
 
+function getFile(){
 
+  let url = 'http://localhost:5016'
+            fetch(url)
+            // .then(res => res.json())
+            // .then(json => console.log(json))
+          }
 
 return (<>
-<input
-      type="file"
-      id="file"
-      name="file"
-      style={{opacity: '0', width: '0.1px', height: '0.1px', position: 'absolute'}}
-      onChange={(event) => {
-      // if (event.target.files !== ''){
-      // temp(event.target.files);
-      // text('ADD NEW LOGO');}
-      console.log(event.target.files)
-      }}
-      />
-      <label for='file' style={{color: 'black',  position: 'relative'}}>ADD NEW LOGO</label>
+    
+      <div style={{background:'blue'}} ><Buttons.Round onClick={() => getFile()}>Yes</Buttons.Round></div>
     </>
-
 )
 
 

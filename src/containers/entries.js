@@ -6,18 +6,23 @@ import Links from "./links";
 import React, {useState} from 'react';
 
 let temps = ["I_LRG", "I_SML", "Custom", "Waikato", "SD_LRG", "F&D_LRG", "F&D_SML"]
-let imageLogo = ['Leedstone_Logo.jpg', "becco.png", "hatTrick.jpg"]
+
 export default function Entries({children, ...restProps}) {
+    // const [logos, setLogos] = useState([]) 
+
     return <></>
 }
 
-Entries.Write = function EntriesWrite({ dname, cbar, cont, desc, comp, addr, phon, ccn, inst, faci, onClick, form, children, template, file, image, ...restProps}) {
+Entries.Write = function EntriesWrite({ dname, cbar, cont, desc, comp, addr, phon, ccn, inst, faci, onClick, logos, form, children, template, file, image, ...restProps}) {
     const [searchText, setSearchText] = useState('')
     const [results, setResults] = useState([])
 
     const [searchLogo, setSearchLogo] = useState('')
     const [logoResult, setLogoResult] = useState([])
-    
+
+
+
+    // console.log(logos)
     let text = ''
     let logoText = ''
 
@@ -81,7 +86,7 @@ Entries.Write = function EntriesWrite({ dname, cbar, cont, desc, comp, addr, pho
         <Locations faci={faci}></Locations>
         {image(searchLogo)}
         {console.log(file)}
-        <Forms.Search style={{fontSize: '16px'}} results={logoResult} value={searchLogo} clear={setLogoResult} text={setSearchLogo} temp={image} onChange={(e) => { text = e.target.value; findLogo(imageLogo); }}>Logo Image</Forms.Search>
+        <Forms.Search style={{fontSize: '16px'}} results={logoResult} value={searchLogo} clear={setLogoResult} text={setSearchLogo} temp={image} onChange={(e) => { text = e.target.value; findLogo(logos); }}>Logo Image</Forms.Search>
         <Links.ReadFile style={{cursor: 'default'}} file={searchLogo}></Links.ReadFile>
 
         </Inputs.Col>
@@ -142,6 +147,13 @@ Entries.Update = function EntriesUpdate({ dname, cbar, cont, desc, comp, addr, p
     const [results, setResults] = useState([])
     const [searchLogo, setSearchLogo] = useState(readonly['Logo'])
     const [logoResult, setLogoResult] = useState([])
+    const [logos, setLogos] = useState([]) 
+
+    let logosUpdate
+    let url = 'http://localhost:5015/Logos'
+    fetch(url)
+        .then(res => res.json())
+        .then(json => logosUpdate = json["logos"])
 
     let text = ''
 
@@ -206,7 +218,7 @@ Entries.Update = function EntriesUpdate({ dname, cbar, cont, desc, comp, addr, p
         <Locations.Update readonly={readonly} faci={faci}></Locations.Update>
         {image(searchLogo)}
         {console.log(file)}
-        <Forms.Search style={{fontSize: '16px'}} results={logoResult} value={searchLogo} clear={setLogoResult} text={setSearchLogo} temp={image} onChange={(e) => { text = e.target.value; findLogo(imageLogo); }}>Logo Image</Forms.Search>
+        <Forms.Search style={{fontSize: '16px'}} results={logoResult} value={searchLogo} clear={setLogoResult} text={setSearchLogo} temp={image} onChange={(e) => { text = e.target.value; findLogo(logosUpdate); }}>Logo Image</Forms.Search>
         <Links.ReadFile style={{cursor: 'default'}} file={searchLogo}></Links.ReadFile>
         </Inputs.Col>
         </Inputs.Wrapper>
