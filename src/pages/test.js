@@ -10,6 +10,7 @@ import Locations from "../containers/locations";
 import Entries from "../containers/entries";
 import Flip from "../components/flip";
 import Buttons from "../components/buttons";
+import Checklist from "../components/checklist";
 
 import img from "../images/misc/bike.jpg";
 import { Button } from "../components/forms/styles/forms";
@@ -32,8 +33,17 @@ function getFile(){
           }
 
 return (<>
-    
-      <div style={{background:'blue'}} ><Buttons.Round onClick={() => getFile()}>Yes</Buttons.Round></div>
+    <Checklist style={{background: 'black'}}>
+      <Checklist.UL>
+        <Checklist.LI>
+          <Checklist.Label>One
+            
+            <Checklist.Check><Checklist.Input/></Checklist.Check> 
+          </Checklist.Label>
+        </Checklist.LI>
+      </Checklist.UL>
+    </Checklist>
+      
     </>
 )
 
